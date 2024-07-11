@@ -24,16 +24,21 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
 
         $faker = Factory::create('fr_FR');
 
+        $i = 0;
         foreach (TrickFixture::TRICK_ARRAY as ['ref' => $trick]) {
             $trickPicture = new TrickPicture();
             $date = $faker->dateTime();
 
+            if($i === 0) {
+                $trickPicture->setHomepage(true);
+            }
             $trickPicture->setUrl($pictures[array_rand($pictures)])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->addTrick($this->getReference($trick))
             ;
 
             $manager->persist($trickPicture);
+            $i++;
         }
 
         $manager->flush();
