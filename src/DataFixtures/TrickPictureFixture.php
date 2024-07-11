@@ -16,10 +16,10 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
         $finder = new Finder();
 
         $pictures = [];
-        $finder->files()->in('public\pictures')->name(['*.jpg', '*.jpeg','*.png']);
+        $finder->files()->in('public\asset\pictures')->name(['*.jpg', '*.jpeg','*.png']);
         foreach ($finder as $file) {
-            $filePath = $file->getPathname();
-            $pictures[] = $filePath;
+            $fileName = $file->getFilename();
+            $pictures[] = $fileName;
         }
 
         $faker = Factory::create('fr_FR');
