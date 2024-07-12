@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickPictureRepository::class)]
+#[UniqueEntity('isHomepage')]
 class TrickPicture
 {
     #[ORM\Id]
@@ -28,6 +30,9 @@ class TrickPicture
      */
     #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'trickPictures')]
     private Collection $tricks;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isHomepage = null;
 
     public function __construct()
     {
@@ -83,6 +88,18 @@ class TrickPicture
     public function removeTrick(Trick $trick): static
     {
         $this->tricks->removeElement($trick);
+
+        return $this;
+    }
+
+    public function isHomepage(): ?bool
+    {
+        return $this->isHomepage;
+    }
+
+    public function setHomepage(?bool $isHomepage): static
+    {
+        $this->isHomepage = $isHomepage;
 
         return $this;
     }
