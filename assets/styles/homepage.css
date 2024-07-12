@@ -1,0 +1,6 @@
+.trick_list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}/*# sourceMappingURL=homepage.css.map */

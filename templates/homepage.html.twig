@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil SnowTrick{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/homepage.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block body %}
+<div class="trick_list">
+  {% for trick in trickList %}
+  <div>
+    {% if trick.getTrickPictures()|length > 0 %} {% set oldestPicture =
+        trick.getOldestPicture() %}
+    <img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" alt="Image pour {{ trick.name }}" style="width: 100px; height: 100px;"/>
+    {% endif %}
+    <p>{{ trick.name }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

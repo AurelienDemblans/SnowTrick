@@ -205,4 +205,21 @@ class Trick
 
         return $this;
     }
+
+    public function getOldestPicture()
+    {
+        $oldestPicture = null;
+        foreach ($this->trickPictures as $picture) {
+            if(null === $picture->getCreatedAt()) {
+                continue;
+            }
+
+            /** @var TrickPicture $oldestPicture */
+            if($oldestPicture === null || $picture->getCreatedAt() < $oldestPicture->getCreatedAt()) {
+                $oldestPicture = $picture;
+            }
+        }
+
+        return $oldestPicture;
+    }
 }

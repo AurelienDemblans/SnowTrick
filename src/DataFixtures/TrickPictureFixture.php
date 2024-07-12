@@ -40,6 +40,18 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
             $manager->persist($trickPicture);
             $i++;
         }
+        foreach (TrickFixture::TRICK_ARRAY as ['ref' => $trick]) {
+            $trickPicture = new TrickPicture();
+            $date = $faker->dateTime();
+
+
+            $trickPicture->setUrl($pictures[array_rand($pictures)])
+            ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
+                ->addTrick($this->getReference($trick))
+            ;
+
+            $manager->persist($trickPicture);
+        }
 
         $manager->flush();
     }
