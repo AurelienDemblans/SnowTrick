@@ -206,7 +206,7 @@ class Trick
         return $this;
     }
 
-    public function getOldestPicture()
+    public function getOldestPicture(): ?TrickPicture
     {
         $oldestPicture = null;
         foreach ($this->trickPictures as $picture) {

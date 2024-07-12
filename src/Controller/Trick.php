@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TrickPictureRepository;
 use App\Repository\TrickRepository;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ class Trick extends AbstractController
 {
     public function __construct(
         private readonly TrickRepository $trickRepository,
+        private readonly TrickPictureRepository $trickPictureRepository,
         private readonly SerializerInterface $serializer
     ) {
 
@@ -25,11 +27,11 @@ class Trick extends AbstractController
         name: 'homepage',
         methods:Request::METHOD_GET
     )]
-    // #[IsGranted('ROLE_ADMIN')]
     public function showList()
     {
-        $trickList = $this->trickRepository->findLastTricks(15);
+        $trickList = $this->trickRepository->findAll();
+        $homepagePicture = $this->trickPictureRepository->findOneBy(['isHomepage' => true]);
 
-        return $this->render('homepage.html.twig', ['trickList' => $trickList]);
+        return $this->render('homepage.html.twig', ['trickList' => $trickList, "homepagePicture" => $homepagePicture]);
     }
 }

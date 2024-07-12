@@ -1,3 +1,6 @@
-button {
-    background-color: whitesmoke;
+.nav_bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 45px;
 }
