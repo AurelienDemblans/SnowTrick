@@ -35,7 +35,7 @@ class Trick
     /**
      * @var Collection<int, TrickPicture>
      */
-    #[ORM\ManyToMany(targetEntity: TrickPicture::class, mappedBy: 'tricks')]
+    #[ORM\OneToMany(targetEntity: TrickPicture::class, mappedBy: 'trick', orphanRemoval: true)]
     private Collection $trickPictures;
 
     /**
@@ -134,7 +134,7 @@ class Trick
     {
         if (!$this->trickPictures->contains($trickPicture)) {
             $this->trickPictures->add($trickPicture);
-            $trickPicture->addTrick($this);
+            $trickPicture->setTrick($this);
         }
 
         return $this;
@@ -143,7 +143,9 @@ class Trick
     public function removeTrickPicture(TrickPicture $trickPicture): static
     {
         if ($this->trickPictures->removeElement($trickPicture)) {
-            $trickPicture->removeTrick($this);
+            if ($trickPicture->getTrick() === $this) {
+                $trickPicture->setTrick(null);
+            }
         }
 
         return $this;

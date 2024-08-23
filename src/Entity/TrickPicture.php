@@ -25,19 +25,12 @@ class TrickPicture
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @var Collection<int, Trick>
-     */
-    #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'trickPictures')]
-    private Collection $tricks;
+    #[ORM\ManyToOne(inversedBy: 'trickPictures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Trick $trick = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isHomepage = null;
-
-    public function __construct()
-    {
-        $this->tricks = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -56,6 +49,18 @@ class TrickPicture
         return $this;
     }
 
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(?Trick $trick): static
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
@@ -64,30 +69,6 @@ class TrickPicture
     public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Trick>
-     */
-    public function getTricks(): Collection
-    {
-        return $this->tricks;
-    }
-
-    public function addTrick(Trick $trick): static
-    {
-        if (!$this->tricks->contains($trick)) {
-            $this->tricks->add($trick);
-        }
-
-        return $this;
-    }
-
-    public function removeTrick(Trick $trick): static
-    {
-        $this->tricks->removeElement($trick);
 
         return $this;
     }
