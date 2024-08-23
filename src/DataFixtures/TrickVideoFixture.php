@@ -16,10 +16,10 @@ class TrickVideoFixture extends Fixture implements DependentFixtureInterface
         $finder = new Finder();
 
         $videos = [];
-        $finder->files()->in('public\videos')->name(['*.mp4']);
+        $finder->files()->in('public\asset\videos')->name(['*.mp4']);
         foreach ($finder as $file) {
-            $filePath = $file->getPathname();
-            $videos[] = $filePath;
+            $fileName = $file->getFilename();
+            $videos[] = $fileName;
         }
 
         $faker = Factory::create('fr_FR');
