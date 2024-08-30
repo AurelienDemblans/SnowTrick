@@ -34,7 +34,7 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
             }
             $trickPicture->setUrl($pictures[array_rand($pictures)])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
-                ->addTrick($this->getReference($trick))
+                ->setTrick($this->getReference($trick))
             ;
 
             $manager->persist($trickPicture);
@@ -47,7 +47,7 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
 
             $trickPicture->setUrl($pictures[array_rand($pictures)])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
-                ->addTrick($this->getReference($trick))
+                ->setTrick($this->getReference($trick))
             ;
 
             $manager->persist($trickPicture);
