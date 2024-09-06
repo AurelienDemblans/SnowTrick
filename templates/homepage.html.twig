@@ -1,81 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil SnowTrick{% endblock %}
+{% block title %}Accueil SnowTrick
+{% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('styles/homepage.css') }}" type="text/css" media="all" />
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/homepage.css') }}" type="text/css" media="all"/>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    $(document).ready(function() {
-        $('a.smooth-scroll').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            $('html, body').animate({
-                scrollTop: $(target).offset().top
-            }, 1000); 
-        });
-    });
-</script>
-<script>
-    var trickListLength = "{{ trickList|length }}";
-    var trickTarget = 1;
-    $(document).ready(function() {
-        var nbTricksPerPage = document.getElementById("trick_list").getAttribute('data-nbTricksPerPage');
-        
-        //on click 'show more trick' button a new round of tricks are displayed into the page
-        $('button#moreTricks').on('click', function(e) {
-            const divs = document.querySelectorAll('div[data-trickTarget="'+trickTarget+'"]');
-            trickTarget++;
+	{{ parent() }}
+	<script>
+		$(document).ready(function () {
+$('a.smooth_scroll_up').on('click', function (e) {
+e.preventDefault();
+var target = $(this).data('target');
+$('html, body').animate({
+scrollTop: $(target).offset().top
+}, 1000);
+});
+$('a.smooth_scroll_down').on('click', function (e) {
+e.preventDefault();
+var target = $(this).data('target');
+$('html, body').animate({
+scrollTop: $(target).offset().top
+}, 1000);
+});
+});
+	</script>
+	<script>
+		var trickListLength = "{{ trickList|length }}";
+var trickTarget = 1;
+$(document).ready(function () {
+var nbTricksPerPage = document.getElementById("trick_list").getAttribute('data-nbTricksPerPage');
 
-            divs.forEach(div => {
-              div.classList.remove('hide');
-              div.classList.add('show_trick');
-            });
+// on click 'show more trick' button a new round of tricks are displayed into the page
+$('button#moreTricks').on('click', function (e) {
+const divs = document.querySelectorAll('div[data-trickTarget="' + trickTarget + '"]');
+trickTarget++;
 
-            //scroll to bottom page when new tricks are revealed
-            var target = $(this).data('target');
-            window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: 'smooth' 
-          });
+divs.forEach(div => {
+div.classList.remove('hide');
+div.classList.add('show');
+});
 
-          //hide button if all tricks displayed
-          if(trickTarget >= (trickListLength / nbTricksPerPage)){
-            const showMoreButton = document.getElementById("moreTricks");
-            showMoreButton.classList.add('hide');
-          } 
-        });
+// scroll to bottom page when new tricks are revealed
+var target = $(this).data('target');
+window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
 
-    });
-</script>
+// hide button if all tricks displayed
+if (trickTarget >= (trickListLength / nbTricksPerPage)) {
+const showMoreButton = document.getElementById("moreTricks");
+showMoreButton.classList.add('hide');
+}
+if ((trickTarget * nbTricksPerPage) >= 8) {
+const arrowUp = document.getElementById('arrowUp');
+arrowUp.classList.remove('hide');
+arrowUp.classList.add('show_trick');
+
+}
+});
+});
+	</script>
 {% endblock %}
 
 {% block body %}
-<div class="homepage_picture">
-    <p class="catch_phrase">toujours plus haut</p>
-    <img src="{{ asset('asset/pictures/' ~ homepagePicture.url) }}" alt="Image d'accueil"/>
-    <a href="#" class="smooth-scroll" data-target="#trick_list">{{ ux_icon('formkit:arrowdown') }}</a>
-</div>
-{% set nbTricksPerPage = 4 %}
-<div class="trick_list" id="trick_list" data-nbTricksPerPage={{nbTricksPerPage}}>
-  {% for key, trick in trickList %}
-  {% if key >= nbTricksPerPage %}
-    {% set trickClass = 'hide' %}
-  {% else %}
-  {% set trickClass = 'show_trick' %}
-  {% endif %}
-  <div class="{{trickClass}}" data-trickTarget={{(key/nbTricksPerPage) % nbTricksPerPage}}>
-    {% if trick.getTrickPictures()|length > 0 %} {% set oldestPicture =
-        trick.getOldestPicture() %}
-    <img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" alt="Image pour {{ trick.name }}" style="width: 100px; height: 100px;"/>
-    {% endif %}
-    <p>{{ trick.name }}</p>
-  </div>
-  {% endfor %}
-</div>
-<button id="moreTricks">afficher plus de tricks</button>
+	<div class="homepage_picture">
+		<p class="catch_phrase">toujours plus haut</p>
+		<img src="{{ asset('asset/pictures/' ~ homepagePicture.url) }}" alt="Image d'accueil"/>
+		<a href="#" class="smooth_scroll_up" data-target="#trick_list">{{ ux_icon('formkit:arrowdown') }}</a>
+	</div>
+	{% set nbTricksPerPage = 4 %}
+	<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list" data-nbtricksperpage={{nbTricksPerPage}}>
+		{% for key, trick in trickList %}
+			{% if key >= nbTricksPerPage %}
+				{% set trickClass = 'hide' %}
+			{% else %}
+				{% set trickClass = 'show_trick' %}
+			{% endif %}
+			<div class="col {{trickClass}}" data-tricktarget={{(key/nbTricksPerPage) % nbTricksPerPage}}>
+				<div class="card h-100">
+					{% set oldestPicture = trick.getOldestPicture() %}
+					<img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
+					<div class="card-body">
+						<h5 class="card-title">
+							<a href="#">
+								{{ trick.name }}</a>
+						</h5>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<footer>
+		<button id="moreTricks" class="btn btn-success">Afficher plus de tricks</button>
+		<a href="#" class="smooth_scroll_down hide" data-target="#trick_list" id="arrowUp">{{ ux_icon('formkit:arrowup') }}</a>
+	</footer>
 {% endblock %}
