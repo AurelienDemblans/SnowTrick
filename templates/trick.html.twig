@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} SnowTrick : {{trick.name}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/homepage.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+<div>{{trick.name}}</div>
+<div>{{trick.trickGroup.name}}</div>
+<div>{{trick.description}}</div>
+<div>{{ trick.createdAt|date('d/m/Y') }}</div>
+{% set hasBeenUpdated = trick.updatedAt ? trick.updatedAt|date('d/m/Y') : null %}
+{% if hasBeenUpdated is not null %}
+<div>{{ trick.updatedAt|date('d/m/Y') }}</div>
+			{% else %}
+<div>jamais mis à jour</div>
+            {% endif %}
+            <ul>
+    {% for comment in trick.comments %}
+        <li>{{ comment.content }}</li>
+        <li>{{ comment.id }}</li>
+    {% else %}
+        <li>Aucun commentaire pour ce trick.</li>
+    {% endfor %}
+</ul>
+           <ul>
+    {% for picture in trick.trickPictures %}
+        <li><img src="{{ asset('asset/pictures/' ~ picture.url) }}"/></li>
+    {% else %}
+        <li>Aucune photo pour ce trick.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Trick;
 
+use App\Entity\Trick;
 use App\Repository\TrickPictureRepository;
 use App\Repository\TrickRepository;
-use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class Trick extends AbstractController
+class TrickShowController extends AbstractController
 {
     public function __construct(
         private readonly TrickRepository $trickRepository,
@@ -23,15 +22,12 @@ class Trick extends AbstractController
     }
 
     #[Route(
-        '/accueil',
-        name: 'homepage',
+        '/trick/{id}/{slug}',
+        name: 'trick',
         methods:Request::METHOD_GET
     )]
-    public function showList()
+    public function showTrick(Trick $trick): Response
     {
-        $trickList = $this->trickRepository->findAll();
-        $homepagePicture = $this->trickPictureRepository->findOneBy(['isHomepage' => true]);
-
-        return $this->render('homepage.html.twig', ['trickList' => $trickList, "homepagePicture" => $homepagePicture]);
+        return $this->render('trick.html.twig', ['trick' => $trick]);
     }
 }
