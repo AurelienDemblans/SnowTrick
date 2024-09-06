@@ -50,6 +50,9 @@ class Trick
     #[ORM\OneToMany(targetEntity: TrickComment::class, mappedBy: 'trick', orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->trickPictures = new ArrayCollection();
@@ -212,16 +215,28 @@ class Trick
     {
         $oldestPicture = null;
         foreach ($this->trickPictures as $picture) {
-            if(null === $picture->getCreatedAt()) {
+            if (null === $picture->getCreatedAt()) {
                 continue;
             }
 
             /** @var TrickPicture $oldestPicture */
-            if($oldestPicture === null || $picture->getCreatedAt() < $oldestPicture->getCreatedAt()) {
+            if ($oldestPicture === null || $picture->getCreatedAt() < $oldestPicture->getCreatedAt()) {
                 $oldestPicture = $picture;
             }
         }
 
         return $oldestPicture;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
