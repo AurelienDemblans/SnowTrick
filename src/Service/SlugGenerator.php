@@ -8,7 +8,7 @@ class SlugGenerator
 {
     public function __invoke(string $stringToSlugify): string
     {
-        $slug = str_replace(' ', '-', $stringToSlugify);
+        $slug = strtolower(str_replace(' ', '-', $stringToSlugify));
         return $slug;
     }
 
