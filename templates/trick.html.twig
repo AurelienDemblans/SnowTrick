@@ -10,7 +10,44 @@
 	<link rel="stylesheet" href="{{ asset('styles/trickPage.css') }}" type="text/css" media="all"/>
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+var test = "{{ hasMoreComments ?? 'coucou' }}";
+console.log(test);
+let offset = document.getElementsByClassName("trick_comment_item").length;
+let trickId = Number("{{ trick.id }}");
+console.log(trickId)
+const loadMoreButton = document.getElementById('load-more-comments');
+
+loadMoreButton.addEventListener("click", function () {
+fetch(`/trick_comments/${
+trickId
+}/comments_offset/${
+offset
+}`).then(response => response.text()).then(data => {
+const tempDiv = document.createElement('div');
+tempDiv.innerHTML = data;
+var hasMoreCommentsDiv = tempDiv.querySelector('[data-hasmorecomments]');
+const hasMoreCommentsValue = hasMoreCommentsDiv.getAttribute('data-hasmorecomments');
+console.log(hasMoreCommentsValue);
+if (hasMoreCommentsValue !== '1') {
+const moreCommentButton = document.getElementById('load-more-comments-container');
+if (moreCommentButton) {
+moreCommentButton.remove();
+}
+}
+const commentsContainer = document.getElementById('more_comments_container');
+commentsContainer.insertAdjacentHTML('beforeend', data);
+offset += 5;
+
+}).catch(error => console.error('Error:', error));
+console.log(offset);
+});
+});
+	</script>
+{% endblock %}
 
 {% block body %}
 	<div class="cover_img">
@@ -78,9 +115,9 @@
 	</div>
 
 	<h6 class="text-center m-4">Commentaires de la communauté</h6>
-	<ul class="list-group">
-		{% for comment in trick.comments %}
-			<li class="list-group-item d-flex">
+	<ul class="list-group" id="more_comments_container">
+		{% for comment in comments %}
+			<li class="list-group-item d-flex trick_comment_item">
 				{% if comment.getUser().getLogo() is not null %}
 					<img src="{{comment.getUser().getLogo()}}" class="rounded-circle" style="width: 50px;" alt="Avatar"/>
 				{% else %}
@@ -93,5 +130,7 @@
 		{% endfor %}
 	</ul>
 
-
+	<div class="text-center m-4" id="load-more-comments-container">
+		<button type="button" class="btn btn-primary" id="load-more-comments">Afficher plus de commentaires</button>
+	</div>
 {% endblock %}
