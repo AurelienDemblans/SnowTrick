@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Trick;
+use App\Service\SlugGenerator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -30,14 +31,17 @@ class TrickFixture extends Fixture implements DependentFixtureInterface
         foreach (self::TRICK_ARRAY as ['name' => $name,'group' => $group, 'ref' => $ref]) {
             $trick = new Trick();
             $date = $faker->dateTime();
+            $slugGenerator = new SlugGenerator();
+            $slug = $slugGenerator($name);
 
             $trick->setName($name)
+                ->setSlug($slug)
                 ->setDescription($faker->text())
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->setTrickGroup($this->getReference($group))
             ;
 
-            if($name === 'Stalefish') {
+            if ($name === 'Stalefish') {
                 $updatedAt = $date->modify('+1 month');
                 $trick->setUpdatedAt(\DateTimeImmutable::createFromMutable($updatedAt));
             }

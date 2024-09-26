@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	SnowTrick :
+	{{trick.name}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/trickPage.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		const trickId = Number("{{ trick.id }}");
+	</script>
+	<script src="{{ asset('asset/JS/trickTemplate.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+	<div class="cover_img">
+		<div class="trick_name">{{trick.name}}</div>
+		{% if trick.getOldestPicture() %}
+			{% include "editOrDeleteButton.html.twig" %}
+			<img src="{{ asset('asset/pictures/' ~ trick.getOldestPicture().getUrl()) }}" alt="Oldest picture of the trick">
+		{% else %}
+			<img src="{{ asset('asset/pictures/' ~ trick.trickPictures|first.getUrl()) }}" alt="Oldest picture of the trick">
+		{% endif %}
+	</div>
+	<div class="pictures_videos_list">
+		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list">
+			{% for picture in trick.trickPictures %}
+				<div class="card h-100">
+					<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+				</div>
+			{% endfor %}
+			{% for video in trick.trickVideos %}
+				<div class="card h-100">
+					<video controls>
+						<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
+						Votre navigateur ne supporte pas la vidéo HTML5.
+					</video>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+	<div class="description text-center m-3">
+		<h5>Description</h5>
+		{{trick.description}}
+	</div>
+
+	<div class="trick_infos m-3 row justify-content-center gx-2">
+		<div class="category col col-lg-2">
+			<span class="badge text-bg-dark">Catégorie :
+				{{trick.trickGroup.name}}</span>
+
+		</div>
+		<div class="created_at col col-lg-2">
+			<span class="badge text-bg-dark">créé le :
+				{{ trick.createdAt|date('d/m/Y') }}</span>
+		</div>
+		{% set hasBeenUpdated = trick.updatedAt ? trick.updatedAt|date('d/m/Y') : null %}
+		{% if hasBeenUpdated is not null %}
+			<div class="updated_at col col-lg-2">
+				<span class="badge text-bg-dark">mis à jour :
+					{{ trick.updatedAt|date('d/m/Y') }}</span>
+			</div>
+		{% else %}
+			<div class="updated_at col col-lg-2">
+				<span class="badge text-bg-dark">jamais mis à jour</span>
+			</div>
+		{% endif %}
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="col-11 col-md-8 col-lg-6">
+			<div class="input-group mb-3 justify-content-md-center">
+				<textarea class="form-control" aria-label="With textarea" placeholder="Laissez un commentaire ici ..." aria-describedby="button-add-comment"></textarea>
+				<button class="btn btn-outline-primary" type="button" id="button-add-comment">Envoyer</button>
+			</div>
+		</div>
+	</div>
+
+	<h6 class="text-center m-4">Commentaires de la communauté</h6>
+	<ul class="list-group" id="more_comments_container">
+		{% for comment in comments %}
+			<li class="list-group-item d-flex trick_comment_item">
+				{% if comment.getUser().getLogo() is not null %}
+					<img src="{{comment.getUser().getLogo()}}" class="rounded-circle" style="width: 50px;" alt="Avatar"/>
+				{% else %}
+					<div class="no_avatar" alt="Avatar">{{comment.getUser().getName()|slice(0, 2)}}</div>
+				{% endif %}
+				<div>{{ comment.content }}</div>
+			</li>
+		{% else %}
+			<li class="list-group-item">Aucun commentaire pour ce trick.</li>
+		{% endfor %}
+	</ul>
+
+	<div class="text-center m-4" id="load-more-comments-container">
+		<button type="button" class="btn btn-primary" id="load-more-comments">Afficher plus de commentaires</button>
+	</div>
+{% endblock %}

@@ -84,7 +84,7 @@ arrowUp.classList.add('show_trick');
 					<img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
 					<div class="card-body">
 						<h5 class="card-title">
-							<a href="#">
+							<a href="{{ path('trick', {'id': trick.id, 'slug': trick.slug}) }}">
 								{{ trick.name }}</a>
 						</h5>
 					</div>

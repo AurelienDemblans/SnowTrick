@@ -16,6 +16,18 @@ class TrickCommentRepository extends ServiceEntityRepository
         parent::__construct($registry, TrickComment::class);
     }
 
+    public function findCommentsByTrickPaginated($trick, $offset = 0, $limit = 15)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.trick = :trick')
+            ->setParameter('trick', $trick)
+            ->orderBy('c.createdAt', 'ASC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return TrickComment[] Returns an array of TrickComment objects
     //     */
