@@ -48,7 +48,7 @@ class TrickShowController extends AbstractController
         $moreComments = $this->commentRepository->findCommentsByTrickPaginated($trick, $offset + self::COMMENT_LIMIT, 1);
         $hasMoreComments = count($moreComments) > 0 ? true : false;
 
-        return $this->render('trickComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
+        return $this->render('listComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
     }
 
 
