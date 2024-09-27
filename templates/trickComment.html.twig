@@ -1,4 +1,6 @@
-<div style="display:none" data-hasmorecomments="{{hasMoreComments}}" id="hasMoreComments">COUCOU</div>
+<link rel="stylesheet" href="{{ asset('styles/listComment.css') }}" type="text/css" media="all"/>
+
+<div style="display:none" data-hasmorecomments="{{hasMoreComments ?? false}}" id="hasMoreComments"></div>
 <ul class="list-group">
 	{% for comment in comments %}
 		<li class="list-group-item d-flex trick_comment_item">
