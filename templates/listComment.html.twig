@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="{{ asset('styles/listComment.css') }}" type="text/css" media="all"/>
+
+<div style="display:none" data-hasmorecomments="{{hasMoreComments ?? false}}" id="hasMoreComments"></div>
+<ul class="list-group">
+	{% for comment in comments %}
+		<li class="list-group-item d-flex trick_comment_item">
+			{% if comment.getUser().getLogo() is not null %}
+				<img src="{{comment.getUser().getLogo()}}" class="rounded-circle" style="width: 50px;" alt="Avatar"/>
+			{% else %}
+				<div class="no_avatar" alt="Avatar">{{comment.getUser().getName()|slice(0, 2)}}</div>
+			{% endif %}
+			<div>{{ comment.content }}
+			</br>
+			<span>le
+				{{ comment.createdAt|date('d/m/Y') }}</span>
+			<span>par
+				{{ comment.user.getName() }}</span>
+		</li>
+	</div>
+</li>{% else %}
+<li class="list-group-item">Aucun commentaire</li>{% endfor %}</ul>

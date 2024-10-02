@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class TrickShowController extends AbstractController
 {
@@ -20,7 +19,6 @@ class TrickShowController extends AbstractController
     public function __construct(
         private readonly TrickRepository $trickRepository,
         private readonly TrickPictureRepository $trickPictureRepository,
-        private readonly SerializerInterface $serializer,
         private readonly TrickCommentRepository $commentRepository
     ) {
 
@@ -50,7 +48,7 @@ class TrickShowController extends AbstractController
         $moreComments = $this->commentRepository->findCommentsByTrickPaginated($trick, $offset + self::COMMENT_LIMIT, 1);
         $hasMoreComments = count($moreComments) > 0 ? true : false;
 
-        return $this->render('trickComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
+        return $this->render('listComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
     }
 
 
