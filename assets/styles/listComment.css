@@ -13,4 +13,7 @@
 .list-group-item {
   gap: 10px;
   align-items: center;
+}
+.list-group-item span {
+  font-style: italic;
 }/*# sourceMappingURL=listComment.css.map */

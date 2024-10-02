@@ -9,9 +9,13 @@
 			{% else %}
 				<div class="no_avatar" alt="Avatar">{{comment.getUser().getName()|slice(0, 2)}}</div>
 			{% endif %}
-			<div>{{ comment.content }}</div>
+			<div>{{ comment.content }}
+			</br>
+			<span>le
+				{{ comment.createdAt|date('d/m/Y') }}</span>
+			<span>par
+				{{ comment.user.getName() }}</span>
 		</li>
-	{% else %}
-		<li class="list-group-item">Aucun commentaire pour ce trick.</li>
-	{% endfor %}
-</ul>
+	</div>
+</li>{% else %}
+<li class="list-group-item">Aucun commentaire</li>{% endfor %}</ul>
