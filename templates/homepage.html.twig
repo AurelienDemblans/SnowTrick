@@ -65,6 +65,12 @@ arrowUp.classList.add('show_trick');
 {% endblock %}
 
 {% block body %}
+
+	{% for message in app.flashes('user_created') %}
+		<div class="user_created text-center">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<div class="homepage_picture">
 		<p class="catch_phrase">toujours plus haut</p>
 		<img src="{{ asset('asset/pictures/' ~ homepagePicture.url) }}" alt="Image d'accueil"/>
