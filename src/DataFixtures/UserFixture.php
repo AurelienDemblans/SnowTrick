@@ -30,10 +30,10 @@ class UserFixture extends Fixture
             $user->setName($name)
                 ->setPassword($faker->password())
                 ->setEmail($email)
-                ->setRole($role)
+                ->setRoles([$role])
             ;
 
-            if($logo) {
+            if ($logo) {
                 $user->setLogo('https://picsum.photos/200');
             }
 
