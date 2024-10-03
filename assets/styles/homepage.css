@@ -58,4 +58,8 @@ svg {
 footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.user_created {
+  background-color: greenyellow;
 }/*# sourceMappingURL=homepage.css.map */
