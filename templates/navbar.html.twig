@@ -2,7 +2,7 @@
 	<a href="{{ path('homepage') }}">Accueil</a>
 	<a href="">Tricks</a>
 	<a href="{{ path('chatroom', {'page': 1}) }}">Espace de discussion</a>
-	{% if app.user %}
+	{% if is_granted('IS_AUTHENTICATED') %}
 		<a href="{{ path('app_logout') }}">Déconnexion</a>
 	{% else %}
 		<a href="{{ path('app_login')}}">Connexion</a>

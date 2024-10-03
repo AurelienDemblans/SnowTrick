@@ -1,3 +1,10 @@
 body {
   background-color: skyblue !important;
 }
+
+.flash_error_comment {
+  background-color: red;
+}
+.flash_succes_comment {
+  background-color: greenyellow;
+}
