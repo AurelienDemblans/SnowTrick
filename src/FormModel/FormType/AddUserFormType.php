@@ -33,7 +33,7 @@ class AddUserFormType extends AbstractType
             ->add('password', PasswordType::class, ['label' => 'Mot de passe','constraints' => [
                 new Assert\Length([
                     'min' => 6,
-                    'minMessage' => 'Le nom doit contenir au moins {{ limit }} caractères.',
+                    'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
                 ]),
             ]])
             ->add('save', SubmitType::class)

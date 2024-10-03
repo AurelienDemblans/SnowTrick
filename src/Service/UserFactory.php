@@ -5,12 +5,16 @@ declare (strict_types=1);
 namespace App\Service;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
+use Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory
 {
-    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly UserRepository $userRepository
+    ) {
 
     }
     /**
@@ -22,7 +26,11 @@ class UserFactory
      */
     public function createUser(User $user): User
     {
-        // hash the password (based on the security.yaml config for the $user class)
+        //check email already used
+        if ($this->userRepository->findOneByEmail($user->getEmail()) !== null) {
+            throw new Exception('cet email est déjà utilisé');
+        }
+
         $hashedPassword = $this->passwordHasher->hashPassword(
             $user,
             $user->getPassword()
