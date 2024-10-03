@@ -25,8 +25,16 @@ security:
       security: false
     main:
       lazy: true
-      provider: users_in_memory
-
+      provider: app_user_provider
+      form_login:
+        # "app_login" is the name of the route created previously
+        login_path: app_login
+        check_path: app_login
+        default_target_path: homepage
+      logout:
+        path: app_logout
+        target: homepage # Redirection après déconnexion
+        # target: homepage
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -36,7 +44,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/edit, roles: ROLE_SUBSCRIBER }
+    - { path: ^/edit, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

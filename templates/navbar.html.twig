@@ -1,7 +1,11 @@
 <div class="nav_bar">
-	<a href="{{ path('homepage') }}">Home</a>
+	<a href="{{ path('homepage') }}">Accueil</a>
 	<a href="">Tricks</a>
 	<a href="{{ path('chatroom', {'page': 1}) }}">Espace de discussion</a>
-	<a href="">Sign in</a>
-	<a href="{{ path('sign-up')}}">Sign up</a>
+	{% if app.user %}
+		<a href="{{ path('app_logout') }}">Déconnexion</a>
+	{% else %}
+		<a href="{{ path('app_login')}}">Connexion</a>
+	{% endif %}
+	<a href="{{ path('sign-up')}}">S'enregistrer</a>
 </div>
