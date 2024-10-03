@@ -10,14 +10,14 @@ use Faker\Factory;
 class UserFixture extends Fixture
 {
     public const USER_ARRAY = [
-        ['name' => 'John','role' => 'Admin', 'ref' => 'John', 'email' => 'John@example.com', 'logo' => !null],
-        ['name' => 'Pierre','role' => 'Admin', 'ref' => 'Pierre', 'email' => 'Pierre@example.com', 'logo' => !null],
-        ['name' => 'Marcel','role' => 'Subscriber', 'ref' => 'Marcel', 'email' => 'Marcel@example.com', 'logo' => null],
-        ['name' => 'Hugo','role' => 'Subscriber', 'ref' => 'Hugo', 'email' => 'Hugo@example.com', 'logo' => !null],
-        ['name' => 'Nicolas','role' => 'Moderator', 'ref' => 'Nicolas' , 'email' => 'Nicolas@example.com', 'logo' => null],
-        ['name' => 'Frédéric','role' => 'Moderator', 'ref' => 'Frédéric', 'email' => 'Frédéric@example.com', 'logo' => null],
-        ['name' => 'Emmanuel','role' => 'Subscriber', 'ref' => 'Emmanuel', 'email' => 'Emmanuel@example.com', 'logo' => null],
-        ['name' => 'Valentin','role' => 'Subscriber', 'ref' => 'Valentin', 'email' => 'Valentin@example.com', 'logo' => null],
+        ['name' => 'John','role' => 'ROLE_ADMIN', 'ref' => 'John', 'email' => 'John@example.com', 'logo' => !null],
+        ['name' => 'Pierre','role' => 'ROLE_USER', 'ref' => 'Pierre', 'email' => 'Pierre@example.com', 'logo' => !null],
+        ['name' => 'Marcel','role' => 'ROLE_USER', 'ref' => 'Marcel', 'email' => 'Marcel@example.com', 'logo' => null],
+        ['name' => 'Hugo','role' => 'ROLE_USER', 'ref' => 'Hugo', 'email' => 'Hugo@example.com', 'logo' => !null],
+        ['name' => 'Nicolas','role' => 'ROLE_USER', 'ref' => 'Nicolas' , 'email' => 'Nicolas@example.com', 'logo' => null],
+        ['name' => 'Frédéric','role' => 'ROLE_USER', 'ref' => 'Frédéric', 'email' => 'Frédéric@example.com', 'logo' => null],
+        ['name' => 'Emmanuel','role' => 'ROLE_USER', 'ref' => 'Emmanuel', 'email' => 'Emmanuel@example.com', 'logo' => null],
+        ['name' => 'Valentin','role' => 'ROLE_USER', 'ref' => 'Valentin', 'email' => 'Valentin@example.com', 'logo' => null],
     ];
 
     public function load(ObjectManager $manager): void
@@ -30,10 +30,10 @@ class UserFixture extends Fixture
             $user->setName($name)
                 ->setPassword($faker->password())
                 ->setEmail($email)
-                ->setRole($role)
+                ->setRoles([$role])
             ;
 
-            if($logo) {
+            if ($logo) {
                 $user->setLogo('https://picsum.photos/200');
             }
 
