@@ -10,14 +10,24 @@
 {% block body %}
 	<div class="text-center m-3">Espace de discussion commun à toutes les figures</div>
 
-	<div class="row justify-content-center m-3">
-		<div class="col-11 col-md-8 col-lg-6">
-			<div class="input-group mb-3 justify-content-md-center">
-				<textarea class="form-control" aria-label="With textarea" placeholder="Laissez un commentaire ici ..." aria-describedby="button-add-comment"></textarea>
-				<button class="btn btn-outline-primary" type="button" id="button-add-comment">Envoyer</button>
+	{% if is_granted('IS_AUTHENTICATED') %}
+		{% for label, messages in app.flashes(['error_comment', 'succes_comment']) %}
+			{% for message in messages %}
+				<div class="flash_{{ label }} text-center">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+		<div class="row justify-content-center m-3">
+			<div class="col-11 col-md-8 col-lg-6">
+				<div class="input-group mb-3 justify-content-md-center">
+					<textarea class="form-control" aria-label="With textarea" placeholder="Laissez un commentaire ici ..." aria-describedby="button-add-comment"></textarea>
+					<button class="btn btn-outline-primary" type="button" id="button-add-comment">Envoyer</button>
+				</div>
 			</div>
 		</div>
-	</div>
+	{% endif %}
 
 	{% include "listComment.html.twig" with {'comments': comments}%}
 
