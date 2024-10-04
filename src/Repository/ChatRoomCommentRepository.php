@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\ChatRoom;
+use App\Entity\ChatRoomComment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ChatRoom>
+ * @extends ServiceEntityRepository<ChatRoomComment>
  */
-class ChatRoomRepository extends ServiceEntityRepository
+class ChatRoomCommentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ChatRoom::class);
+        parent::__construct($registry, ChatRoomComment::class);
     }
 
     //    /**
-    //     * @return ChatRoom[] Returns an array of ChatRoom objects
+    //     * @return ChatRoomComment[] Returns an array of ChatRoomComment objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class ChatRoomRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ChatRoom
+    //    public function findOneBySomeField($value): ?ChatRoomComment
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ChatRoomRepository;
+use App\Repository\ChatRoomCommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ChatRoomRepository::class)]
-class ChatRoom
+#[ORM\Entity(repositoryClass: ChatRoomCommentRepository::class)]
+class ChatRoomComment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

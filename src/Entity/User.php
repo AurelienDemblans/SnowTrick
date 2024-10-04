@@ -50,9 +50,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private Collection $trickComments;
 
     /**
-     * @var Collection<int, ChatRoom>
+     * @var Collection<int, ChatRoomComment>
      */
-    #[ORM\OneToMany(targetEntity: ChatRoom::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ChatRoomComment::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $chatRooms;
 
     public function __construct()
@@ -157,29 +157,29 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     }
 
     /**
-     * @return Collection<int, ChatRoom>
+     * @return Collection<int, ChatRoomComment>
      */
-    public function getChatRooms(): Collection
+    public function getChatRoomComments(): Collection
     {
         return $this->chatRooms;
     }
 
-    public function addChatRoom(ChatRoom $chatRoom): static
+    public function addChatRoomComment(ChatRoomComment $chatRoomComment): static
     {
-        if (!$this->chatRooms->contains($chatRoom)) {
-            $this->chatRooms->add($chatRoom);
-            $chatRoom->setUser($this);
+        if (!$this->chatRooms->contains($chatRoomComment)) {
+            $this->chatRooms->add($chatRoomComment);
+            $chatRoomComment->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeChatRoom(ChatRoom $chatRoom): static
+    public function removeChatRoomComment(ChatRoomComment $chatRoomComment): static
     {
-        if ($this->chatRooms->removeElement($chatRoom)) {
+        if ($this->chatRooms->removeElement($chatRoomComment)) {
             // set the owning side to null (unless already changed)
-            if ($chatRoom->getUser() === $this) {
-                $chatRoom->setUser(null);
+            if ($chatRoomComment->getUser() === $this) {
+                $chatRoomComment->setUser(null);
             }
         }
 
