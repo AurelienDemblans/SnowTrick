@@ -87,8 +87,7 @@ arrowUp.classList.add('show_trick');
 			<div class="col {{trickClass}}" data-tricktarget={{(key/nbTricksPerPage) % nbTricksPerPage}}>
 				<div class="card h-100">
 					{% if is_granted('ROLE_ADMIN') %}
-						{{trick.name}}
-						{% include "editOrDeleteButton.html.twig" with {'trickName': trick.name, 'trickId': trick.id} %}
+						{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickId: trick.id} only %}
 					{% endif %}
 					{% set oldestPicture = trick.getOldestPicture() %}
 					<img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
