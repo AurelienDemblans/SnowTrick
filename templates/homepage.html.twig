@@ -73,7 +73,7 @@ arrowUp.classList.add('show_trick');
 	{% endfor %}
 	<div class="homepage_picture">
 		<p class="catch_phrase">toujours plus haut</p>
-		<img src="{{ asset('asset/pictures/' ~ homepagePicture.url) }}" alt="Image d'accueil"/>
+		<img src="{{ asset('asset/pictures/snowtrick4.jpg') }}" alt="Image d'accueil"/>
 		<a href="#" class="smooth_scroll_up" data-target="#trick_list">{{ ux_icon('formkit:arrowdown') }}</a>
 	</div>
 	{% set nbTricksPerPage = 4 %}
@@ -86,6 +86,10 @@ arrowUp.classList.add('show_trick');
 			{% endif %}
 			<div class="col {{trickClass}}" data-tricktarget={{(key/nbTricksPerPage) % nbTricksPerPage}}>
 				<div class="card h-100">
+					{% if is_granted('ROLE_ADMIN') %}
+						{{trick.name}}
+						{% include "editOrDeleteButton.html.twig" with {'trickName': trick.name, 'trickId': trick.id} %}
+					{% endif %}
 					{% set oldestPicture = trick.getOldestPicture() %}
 					<img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
 					<div class="card-body">

@@ -31,6 +31,7 @@ security:
         login_path: app_login
         check_path: app_login
         default_target_path: homepage
+        use_referer: true
       logout:
         path: app_logout
         target: homepage # Redirection après déconnexion
@@ -45,6 +46,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/add-comment, roles: ROLE_USER }
+    - { path: ^/delete, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
