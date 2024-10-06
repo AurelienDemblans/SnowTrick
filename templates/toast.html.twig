@@ -1,0 +1,24 @@
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	<div role="alert" aria-live="assertive" aria-atomic="true" class="toast text-bg-danger" data-bs-autohide="false" id="test-toast">
+		<div class="toast-header">
+			<strong class="me-auto">Une erreur est survenue</strong>
+			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+		<div class="toast-body">
+			{{error_message}}
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$(document).ready(function () {
+const toast = document.getElementById('test-toast');
+const toastInstance = new bootstrap.Toast(toast);
+const error_message = "{{ error_message }}";
+console.log(error_message)
+if (error_message) {
+toastInstance.show()
+}
+});
+</script>
