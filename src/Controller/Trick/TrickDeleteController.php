@@ -3,6 +3,7 @@
 namespace App\Controller\Trick;
 
 use App\Entity\Trick;
+use App\Exception\SnowTrickException;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ class TrickDeleteController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
+        private readonly TrickRepository $trickRepository,
     ) {
 
     }
@@ -25,8 +27,11 @@ class TrickDeleteController extends AbstractController
         methods:Request::METHOD_POST
     )]
     #[IsGranted('ROLE_ADMIN')]
-    public function removeTrick(Trick $trick): Response
+    public function removeTrick(?Trick $trick): Response
     {
+        if (!$trick) {
+            throw new SnowTrickException('Cette figure a déjà été supprimée');
+        }
         $this->entityManager->remove($trick);
         $this->entityManager->flush();
 

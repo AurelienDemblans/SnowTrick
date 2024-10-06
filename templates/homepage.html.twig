@@ -65,7 +65,7 @@ arrowUp.classList.add('show_trick');
 {% endblock %}
 
 {% block body %}
-
+	{% include "toast.html.twig" %}
 	{% for message in app.flashes('user_created') %}
 		<div class="user_created text-center">
 			{{ message }}
