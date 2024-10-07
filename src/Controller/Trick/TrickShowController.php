@@ -3,6 +3,7 @@
 namespace App\Controller\Trick;
 
 use App\Entity\Trick;
+use App\Exception\SnowTrickException;
 use App\Repository\TrickCommentRepository;
 use App\Repository\TrickPictureRepository;
 use App\Repository\TrickRepository;
@@ -31,7 +32,11 @@ class TrickShowController extends AbstractController
     )]
     public function showTrick(Trick $trick): Response
     {
-        $comments = $this->commentRepository->findCommentsByTrickPaginated($trick, self::COMMENT_OFFSET, self::COMMENT_LIMIT);
+        try {
+            $comments = $this->commentRepository->findCommentsByTrickPaginated($trick, self::COMMENT_OFFSET, self::COMMENT_LIMIT);
+        } catch (\Throwable $th) {
+            throw new SnowTrickException('Impossible d\'afficher ce trick', code:404, previous:$th);
+        }
 
         return $this->render('trick.html.twig', ['trick' => $trick, 'comments' => $comments]);
     }
