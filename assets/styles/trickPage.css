@@ -16,6 +16,16 @@
   max-width: 100%;
 }
 
+@media only screen and (max-width: 400px) {
+  .pictures_videos_list.hidden {
+    display: none;
+  }
+}
+@media only screen and (min-width: 401px) {
+  #show_pictures_videos_list_button {
+    display: none;
+  }
+}
 .pictures_videos_list .trick_list .card img,
 .pictures_videos_list .trick_list .card video {
   width: 100%;

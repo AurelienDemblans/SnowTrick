@@ -32,7 +32,14 @@
 			<img src="{{ asset('asset/pictures/' ~ trick.trickPictures|first.getUrl()) }}" alt="Oldest picture of the trick">
 		{% endif %}
 	</div>
-	<div class="pictures_videos_list">
+
+	<div class="text-center m-4" id="show_pictures_videos_list_button">
+		<button class="btn btn-primary show_pictures_videos_list" type="button">
+			Afficher les photos et vidéos
+		</button>
+	</div>
+
+	<div class="pictures_videos_list hidden" id="pictures_videos_list">
 		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list">
 			{% for picture in trick.trickPictures %}
 				<div class="card h-100">
