@@ -37,7 +37,7 @@ class Trick
     /**
      * @var Collection<int, TrickPicture>
      */
-    #[ORM\OneToMany(targetEntity: TrickPicture::class, mappedBy: 'trick', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TrickPicture::class, mappedBy: 'trick', cascade:['persist'], orphanRemoval: true)]
     private Collection $trickPictures;
 
     /**

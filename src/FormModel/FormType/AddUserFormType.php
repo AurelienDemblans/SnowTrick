@@ -19,7 +19,7 @@ class AddUserFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom',
-                'required' => $options['require_due_date'],
+                'required' => $options['required_field'],
                 'constraints' => [
                 new Assert\Length([
                     'min' => 2,
@@ -44,9 +44,9 @@ class AddUserFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'require_due_date' => false,
+            'required_field' => false,
         ]);
 
-        $resolver->setAllowedTypes('require_due_date', 'bool');
+        $resolver->setAllowedTypes('required_field', 'bool');
     }
 }
