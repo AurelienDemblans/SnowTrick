@@ -6,7 +6,9 @@ use App\Entity\Trick;
 use App\Entity\TrickGroup;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,8 +26,8 @@ class TrickFormType extends AbstractType
             ])
             ->add('trickVideos', FileType::class, [
                 'label' => 'Ajouter des vidéos ',
-                'multiple' => true,
                 'mapped' => false,
+                'multiple' => true,
                 'required' => false,
             ])
             ->add('trickPictures', FileType::class, [
@@ -34,6 +36,14 @@ class TrickFormType extends AbstractType
                 'mapped' => false,
                 'required' => true,
             ])
+            ->add('trickVideosUrl', CollectionType::class, [
+                'required' => false,
+                'mapped' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => ['label' => 'lien vers une vidéo'],
+                'label' => false,
+                'data' => array_fill(0, 3, ''),
+            ]);
         ;
     }
 

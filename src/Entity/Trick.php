@@ -43,7 +43,7 @@ class Trick
     /**
      * @var Collection<int, TrickVideo>
      */
-    #[ORM\ManyToMany(targetEntity: TrickVideo::class, mappedBy: 'tricks')]
+    #[ORM\ManyToMany(targetEntity: TrickVideo::class, mappedBy: 'tricks', cascade:['persist'], orphanRemoval: true)]
     private Collection $trickVideos;
 
     /**

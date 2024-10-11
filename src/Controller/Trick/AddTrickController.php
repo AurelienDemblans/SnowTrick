@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Form\TrickFormType;
 use App\Service\PictureFactory;
 use App\Service\TrickAddFactory;
+use App\Service\VideoFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class AddTrickController extends AbstractController
     public function __construct(
         private readonly TrickAddFactory $trickAddFactory,
         private readonly PictureFactory $pictureFactory,
+        private readonly VideoFactory $videoFactory,
         private readonly EntityManagerInterface $entityManager
     ) {
 
@@ -38,12 +40,13 @@ class AddTrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $filledTrick = $form->getData();
             $picturesList = $form->get('trickPictures')->getData();
-            // $videosList = $form->get('trickVideos')->getData();
+            $videosList = $form->get('trickVideos')->getData();
 
             $this->entityManager->beginTransaction();
             try {
                 $trickPictures = $this->pictureFactory->createPictureFromList($picturesList);
-                $trick = $this->trickAddFactory->createTrick($filledTrick, $trickPictures);
+                $trickVideos = $this->videoFactory->createVideoFromList($videosList);
+                $trick = $this->trickAddFactory->createTrick($filledTrick, $trickPictures, $trickVideos);
 
                 $this->entityManager->persist($trick);
 

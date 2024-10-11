@@ -26,9 +26,11 @@ class TrickAddFactory
      *
      * @param  Trick $trick
      * @param  Generator $trickPictures
+     * @param  Generator $trickVideos
+     *
      * @return Trick
      */
-    public function createTrick(Trick $trick, Generator $trickPictures): Trick
+    public function createTrick(Trick $trick, Generator $trickPictures, Generator $trickVideos): Trick
     {
         $slugGenerator = new SlugGenerator();
 
@@ -41,6 +43,9 @@ class TrickAddFactory
         $trick->setSlug($slugGenerator($trick->getName()));
         foreach ($trickPictures as $trickPicture) {
             $trick->addTrickPicture($trickPicture);
+        }
+        foreach ($trickVideos as $trickVideo) {
+            $trick->addTrickVideo($trickVideo);
         }
 
         return $trick;
