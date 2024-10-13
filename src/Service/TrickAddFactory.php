@@ -5,7 +5,7 @@ declare (strict_types=1);
 namespace App\Service;
 
 use App\Entity\Trick;
-use App\Exception\SnowTrickException;
+use App\Exception\FormException;
 use App\Repository\TrickRepository;
 use DateTimeImmutable;
 use Generator;
@@ -35,7 +35,7 @@ class TrickAddFactory
         $slugGenerator = new SlugGenerator();
 
         if ($this->trickRepository->findOneByName($trick->getName()) !== null) {
-            throw new SnowTrickException('impossible de créer le trick : ce nom est déjà utilisé');
+            throw new FormException('impossible de créer le trick : ce nom est déjà utilisé');
         }
 
         $trick->setCreatedAt(new DateTimeImmutable());

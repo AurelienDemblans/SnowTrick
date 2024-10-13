@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Url;
 
 class TrickFormType extends AbstractType
 {
@@ -40,7 +41,14 @@ class TrickFormType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => 'lien vers une vidéo'],
+                'entry_options' => [
+                    'label' => 'lien vers une vidéo',
+                    'constraints' => [
+                        new Url([
+                            'message' => 'Veuillez entrer une URL valide.',
+                        ]),
+                    ],
+                ],
                 'label' => false,
                 'data' => array_fill(0, 3, ''),
             ]);

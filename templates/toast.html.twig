@@ -1,24 +1,41 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-	<div role="alert" aria-live="assertive" aria-atomic="true" class="toast text-bg-danger" data-bs-autohide="false" id="test-toast">
-		<div class="toast-header">
-			<strong class="me-auto">Une erreur est survenue</strong>
-			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-		</div>
-		<div class="toast-body">
-			{{error_message}}
-		</div>
-	</div>
+	{% for label, messages in app.flashes %}
+		{% set status = 'success' in label ? 'success' : ('error' in label ? 'danger' : 'warning') %}
+		{% for message in messages %}
+			<div role="alert" aria-live="assertive" aria-atomic="true" class="toast text-bg-{{status}}" data-bs-autohide="false" id="toast-{{ loop.parent.loop.index }}-{{ loop.index }}">
+				<div class=" toast-header">
+
+					<strong class="me-auto">
+						{% if status is same as('success') %}
+							Opération réussie avec succès.
+						{% elseif status is same as('danger') %}
+							Une erreur est survenue.
+						{% else %}
+							Notification !
+						{% endif %}
+					</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					{{message}}
+				</div>
+			</div>
+		{% endfor %}
+	{% endfor %}
 </div>
 
-
+<div id="flash-messages" data-flash='{{ app.flashes|json_encode }}' styles="display:none" class="test"></div>
 <script>
 	$(document).ready(function () {
-const toast = document.getElementById('test-toast');
-const toastInstance = new bootstrap.Toast(toast);
-const error_message = "{{ error_message }}";
-console.log(error_message)
-if (error_message) {
-toastInstance.show()
+const flashMessagesElement = document.getElementById('flash-messages');
+const flashMessages = JSON.parse(flashMessagesElement.getAttribute('data-flash'));
+
+const toastList = document.getElementsByClassName('toast');
+console.log(Array.from(toastList))
+const toastInstanceList = [];
+for (let toast of toastList) {
+toastInstanceList.push(new bootstrap.Toast(toast));
 }
+toastInstanceList.forEach((toastInstance) => toastInstance.show());
 });
 </script>

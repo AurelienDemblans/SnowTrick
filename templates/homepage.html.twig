@@ -65,7 +65,6 @@ arrowUp.classList.add('show_trick');
 {% endblock %}
 
 {% block body %}
-	{% include "toast.html.twig" %}
 	{% for label, messages in app.flashes %}
 		{% for message in messages %}
 			<div class="flash-{{ label }} text-center sucess_flash">

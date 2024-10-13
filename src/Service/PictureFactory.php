@@ -5,7 +5,7 @@ declare (strict_types=1);
 namespace App\Service;
 
 use App\Entity\TrickPicture;
-use App\Exception\SnowTrickException;
+use App\Exception\FormException;
 use App\Repository\TrickRepository;
 use DateTimeImmutable;
 use Generator;
@@ -48,12 +48,12 @@ class PictureFactory
     {
         $extension = $picture->guessExtension();
         if (!in_array($extension, self::ALLOWED_EXTENSIONS)) {
-            throw new SnowTrickException('Le fichier doit être une image.');
+            throw new FormException('Le fichier doit être une image.');
         }
 
         $mimeType = $picture->getMimeType();
         if (!in_array($mimeType, self::ALLOWED_MIME_EXTENSIONS)) {
-            throw new SnowTrickException('Le fichier doit être une image.');
+            throw new FormException('Le fichier doit être une image.');
         }
 
 

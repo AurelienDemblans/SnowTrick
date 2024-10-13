@@ -3,6 +3,7 @@
 namespace App\Controller\Trick;
 
 use App\Entity\Trick;
+use App\Exception\FormException;
 use App\Form\TrickFormType;
 use App\Service\PictureFactory;
 use App\Service\TrickAddFactory;
@@ -41,11 +42,12 @@ class AddTrickController extends AbstractController
             $filledTrick = $form->getData();
             $picturesList = $form->get('trickPictures')->getData();
             $videosList = $form->get('trickVideos')->getData();
+            $videosListUrl = $form->get('trickVideosUrl')->getData();
 
             $this->entityManager->beginTransaction();
             try {
                 $trickPictures = $this->pictureFactory->createPictureFromList($picturesList);
-                $trickVideos = $this->videoFactory->createVideoFromList($videosList);
+                $trickVideos = $this->videoFactory->createVideoFromList($videosList, $videosListUrl);
                 $trick = $this->trickAddFactory->createTrick($filledTrick, $trickPictures, $trickVideos);
 
                 $this->entityManager->persist($trick);
@@ -53,12 +55,14 @@ class AddTrickController extends AbstractController
                 $this->entityManager->flush();
                 $this->entityManager->commit();
             } catch (\Throwable $th) {
-                dd($th);
                 $this->entityManager->rollback();
+                if ($th instanceof FormException) {
+                    throw new FormException($th->getMessage());
+                }
             }
 
             $this->addFlash(
-                'trick_created',
+                'success_trick_created',
                 'Félicitation, vous avez créé un nouveau Trick !'
             );
 
