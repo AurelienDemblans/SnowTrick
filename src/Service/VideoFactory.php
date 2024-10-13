@@ -22,7 +22,7 @@ class VideoFactory
 
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly ParameterBagInterface $params,
+        private readonly ParameterBagInterface $paramsBagInterface,
         private readonly TrickVideoRepository $trickVideoRepository,
     ) {
     }
@@ -110,7 +110,7 @@ class VideoFactory
             //throw $th;
         }
 
-        $videoDirectory = $this->params->get('videos_directory');
+        $videoDirectory = $this->paramsBagInterface->get('videos_directory');
         $video->move(
             $videoDirectory,
             $filename

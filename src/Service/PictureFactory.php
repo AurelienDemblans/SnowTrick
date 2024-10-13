@@ -21,7 +21,7 @@ class PictureFactory
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly TrickRepository $trickRepository,
-        private readonly ParameterBagInterface $params
+        private readonly ParameterBagInterface $paramsBagInterface
     ) {
     }
 
@@ -67,7 +67,7 @@ class PictureFactory
             //throw $th;
         }
 
-        $picturesDirectory = $this->params->get('pictures_directory');
+        $picturesDirectory = $this->paramsBagInterface->get('pictures_directory');
         $picture->move(
             $picturesDirectory,
             $filename
