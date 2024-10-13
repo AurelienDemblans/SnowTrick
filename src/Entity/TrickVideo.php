@@ -28,6 +28,9 @@ class TrickVideo
     #[ORM\ManyToMany(targetEntity: Trick::class, inversedBy: 'trickVideos')]
     private Collection $tricks;
 
+    #[ORM\Column]
+    private ?bool $isExternalUrl = false;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -82,6 +85,18 @@ class TrickVideo
     public function removeTrick(Trick $trick): static
     {
         $this->tricks->removeElement($trick);
+
+        return $this;
+    }
+
+    public function isExternalUrl(): ?bool
+    {
+        return $this->isExternalUrl;
+    }
+
+    public function setExternalUrl(bool $isExternalUrl): static
+    {
+        $this->isExternalUrl = $isExternalUrl;
 
         return $this;
     }

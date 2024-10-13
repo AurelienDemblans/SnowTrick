@@ -29,8 +29,8 @@ class AddUserController extends AbstractController
     {
         $newUser = new User();
 
-        $dueDateIsRequired = true;
-        $form = $this->createForm(AddUserFormType::class, $newUser, ['require_due_date' => $dueDateIsRequired]);
+        $required_field = true;
+        $form = $this->createForm(AddUserFormType::class, $newUser, ['required_field' => $required_field]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

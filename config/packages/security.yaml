@@ -47,6 +47,7 @@ security:
   access_control:
     - { path: ^/add-comment, roles: ROLE_USER }
     - { path: ^/delete, roles: ROLE_ADMIN }
+    - { path: ^/add, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

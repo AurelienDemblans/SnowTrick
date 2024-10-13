@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     let offset = document.getElementsByClassName("trick_comment_item").length;
     const loadMoreButton = document.getElementById('load-more-comments');
+    const showPictureButton = document.getElementById('show_pictures_videos_list_button');
 
     loadMoreButton.addEventListener("click", function () {
         fetch(`/trick_comments/${trickId
@@ -23,5 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 offset += 5;
 
             }).catch(error => console.error('Error:', error));
+    });
+
+    //show pictures on mobile
+    showPictureButton.addEventListener("click", function () {
+        document.getElementById('pictures_videos_list').classList.remove('hidden');
     });
 });

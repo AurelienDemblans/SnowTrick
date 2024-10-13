@@ -65,11 +65,12 @@ arrowUp.classList.add('show_trick');
 {% endblock %}
 
 {% block body %}
-	{% include "toast.html.twig" %}
-	{% for message in app.flashes('user_created') %}
-		<div class="user_created text-center">
-			{{ message }}
-		</div>
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="flash-{{ label }} text-center sucess_flash">
+				{{ message }}
+			</div>
+		{% endfor %}
 	{% endfor %}
 	<div class="homepage_picture">
 		<p class="catch_phrase">toujours plus haut</p>
@@ -89,8 +90,8 @@ arrowUp.classList.add('show_trick');
 					{% if is_granted('ROLE_ADMIN') %}
 						{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickId: trick.id} only %}
 					{% endif %}
-					{% set oldestPicture = trick.getOldestPicture() %}
-					<img src="{{ asset('asset/pictures/' ~ oldestPicture.url) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
+					{% set oldestPicture = trick.getOldestPicture().url ?? 'snowtrick4.jpg' %}
+					<img src="{{ asset('asset/pictures/' ~ oldestPicture) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
 					<div class="card-body">
 						<h5 class="card-title">
 							<a href="{{ path('trick', {'id': trick.id, 'slug': trick.slug}) }}">

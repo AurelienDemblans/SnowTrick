@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\EventListener;
 
 use App\Exception\SnowTrickException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 #[AsEventListener(event: 'kernel.exception', priority: 100, method: 'onSnowTrickException')]
 class ExceptionListener
 {
-    private const HOMEPAGE_URL = 'accueil';
     private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator)

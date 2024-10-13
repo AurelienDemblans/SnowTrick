@@ -7,5 +7,8 @@
 	{% else %}
 		<a href="{{ path('app_login')}}">Connexion</a>
 	{% endif %}
+	{% if is_granted('IS_AUTHENTICATED') and is_granted('ROLE_ADMIN')%}
+		<a href="{{ path('trick_add')}}">Créer un trick</a>
+	{% endif %}
 	<a href="{{ path('sign-up')}}">S'enregistrer</a>
 </div>
