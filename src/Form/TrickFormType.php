@@ -35,7 +35,7 @@ class TrickFormType extends AbstractType
                 'label' => 'Ajouter des images ',
                 'multiple' => true,
                 'mapped' => false,
-                'required' => true,
+                'required' => $options['picture_required'],
             ])
             ->add('trickVideosUrl', CollectionType::class, [
                 'required' => false,
@@ -59,6 +59,7 @@ class TrickFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'picture_required' => true,
         ]);
     }
 }
