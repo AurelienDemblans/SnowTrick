@@ -30,7 +30,7 @@ class TrickShowController extends AbstractController
         name: 'trick',
         methods:Request::METHOD_GET
     )]
-    public function showTrick(Trick $trick): Response
+    public function showTrick(?Trick $trick): Response
     {
         try {
             $comments = $this->commentRepository->findCommentsByTrickPaginated($trick, self::COMMENT_OFFSET, self::COMMENT_LIMIT);

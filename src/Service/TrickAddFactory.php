@@ -34,12 +34,16 @@ class TrickAddFactory
     {
         $slugGenerator = new SlugGenerator();
 
-        if ($this->trickRepository->findOneByName($trick->getName()) !== null) {
+        if ($this->trickRepository->findOneByName($trick->getName()) !== null && $this->trickRepository->findOneByName($trick->getName())->getId() !== $trick->getId()) {
             throw new FormException('impossible de créer le trick : ce nom est déjà utilisé');
         }
 
-        $trick->setCreatedAt(new DateTimeImmutable());
-        $trick->setUpdatedAt(null);
+        if ($trick->getId() === null) {
+            $trick->setCreatedAt(new DateTimeImmutable());
+        }
+        if ($trick->getId() !== null) {
+            $trick->setUpdatedAt(new DateTimeImmutable());
+        }
         $trick->setSlug($slugGenerator($trick->getName()));
         foreach ($trickPictures as $trickPicture) {
             $trick->addTrickPicture($trickPicture);
