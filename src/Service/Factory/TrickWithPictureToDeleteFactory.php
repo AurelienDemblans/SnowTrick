@@ -8,7 +8,7 @@ use App\Entity\Trick;
 use App\FormModel\TrickFormModel;
 use App\Interface\TrickFactoryInterface;
 use App\Repository\TrickPictureRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TrickWithPictureToDeleteFactory implements TrickFactoryInterface
 {
@@ -17,7 +17,6 @@ class TrickWithPictureToDeleteFactory implements TrickFactoryInterface
     public function __construct(
         private readonly PictureFactory $pictureFactory,
         private readonly TrickPictureRepository $trickPictureRepository,
-        private readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -30,14 +29,11 @@ class TrickWithPictureToDeleteFactory implements TrickFactoryInterface
      */
     public function build(TrickFormModel $form): Trick
     {
-        dd('coucou');
         $trick = $form->getTrick();
 
         foreach ($form->getPicturesToDelete() as $picture) {
             $trick->removeTrickPicture($picture);
         }
-
-        $this->em->flush();
 
         return $trick;
     }
@@ -51,7 +47,7 @@ class TrickWithPictureToDeleteFactory implements TrickFactoryInterface
      */
     public function support(TrickFormModel $form): bool
     {
-        if ($form->getPicturesToDelete() && is_array($form->getPicturesToDelete()) && count($form->getPicturesToDelete()) !== 0) {
+        if ($form->getPicturesToDelete() && $form->getPicturesToDelete() instanceof ArrayCollection && count($form->getPicturesToDelete()) !== 0) {
             return true;
         }
 

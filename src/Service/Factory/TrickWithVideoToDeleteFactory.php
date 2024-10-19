@@ -8,6 +8,7 @@ use App\Entity\Trick;
 use App\FormModel\TrickFormModel;
 use App\Interface\TrickFactoryInterface;
 use App\Repository\TrickVideoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TrickWithVideoToDeleteFactory implements TrickFactoryInterface
 {
@@ -46,7 +47,7 @@ class TrickWithVideoToDeleteFactory implements TrickFactoryInterface
      */
     public function support(TrickFormModel $form): bool
     {
-        if ($form->getVideosToDelete() && is_array($form->getVideosToDelete()) && count($form->getVideosToDelete()) !== 0) {
+        if ($form->getVideosToDelete() && $form->getVideosToDelete() instanceof ArrayCollection && count($form->getVideosToDelete()) !== 0) {
             return true;
         }
 

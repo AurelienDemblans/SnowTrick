@@ -14,7 +14,7 @@ class TrickWithCoverPictureFactory implements TrickFactoryInterface
     public const PRIORITY = 850;
 
     public function __construct(
-        private readonly PictureFactory $pictureFactory
+        private readonly PictureFactory $pictureFactory,
     ) {
 
     }
@@ -31,7 +31,8 @@ class TrickWithCoverPictureFactory implements TrickFactoryInterface
         $trick = $form->getTrick();
 
         if ($trick->getCoverPictureOnly()) {
-            throw new FormException('Vous ne pouvez avoir qu\'une seule image de couverture');
+            $previousCover = $trick->getCoverPictureOnly();
+            $previousCover->setMainPicture(false);
         }
 
         try {

@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickPictureRepository::class)]
 #[UniqueEntity('isHomepage')]
-#[ORM\UniqueConstraint(name: "unique_main_picture", columns: ["trick_id", "is_main_picture"], options: ["where" => "(is_main_picture = true)"])]
 class TrickPicture
 {
     #[ORM\Id]
