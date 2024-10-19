@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const deletePictureButton = Array.from(document.getElementsByClassName('delete_picture'));
     const deleteVideoButton = Array.from(document.getElementsByClassName('delete_video'));
+    const toggleCoverButton = Array.from(document.getElementsByClassName('toggle_cover_input'));
     const picturesId = [];
     const videosId = [];
 
@@ -41,6 +42,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             document.getElementById('trick_form_videos_id').value = videosId.join(',');
+        });
+    });
+
+    toggleCoverButton.forEach(toggleButton => {
+        toggleButton.addEventListener("click", function () {
+            document.getElementById('cover_input').classList.remove('hidden');
+            document.getElementById('cover_picture').classList.add('hidden');
         });
     });
 });
