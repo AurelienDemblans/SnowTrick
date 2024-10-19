@@ -60,6 +60,10 @@ class TrickDeleteController extends AbstractController
         $this->entityManager->remove($trick);
         $this->entityManager->flush();
 
+        $this->addFlash(
+            'success_trick_deleted',
+            'Trick supprimé avec succès !'
+        );
         return $this->redirectToRoute('homepage');
     }
 }

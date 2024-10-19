@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickPictureRepository::class)]
 #[UniqueEntity('isHomepage')]
+#[ORM\UniqueConstraint(name: "unique_main_picture", columns: ["trick_id", "is_main_picture"], options: ["where" => "(is_main_picture = true)"])]
 class TrickPicture
 {
     #[ORM\Id]
@@ -31,6 +32,9 @@ class TrickPicture
 
     #[ORM\Column(nullable: true)]
     private ?bool $isHomepage = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isMainPicture = null;
 
     public function getId(): ?int
     {
@@ -81,6 +85,18 @@ class TrickPicture
     public function setHomepage(?bool $isHomepage): static
     {
         $this->isHomepage = $isHomepage;
+
+        return $this;
+    }
+
+    public function isMainPicture(): ?bool
+    {
+        return $this->isMainPicture;
+    }
+
+    public function setMainPicture(?bool $isMainPicture): static
+    {
+        $this->isMainPicture = $isMainPicture;
 
         return $this;
     }

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 noPictureCard = document.getElementById('no-picture-card').style.display = '';
             }
 
-            document.getElementById('pictures_input').value = picturesId.join(',');
+            document.getElementById('trick_form_pictures_id').value = picturesId.join(',');
         });
     });
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 noVideoCard = document.getElementById('no-video-card').style.display = '';
             }
 
-            document.getElementById('videos_input').value = videosId.join(',');
+            document.getElementById('trick_form_videos_id').value = videosId.join(',');
         });
     });
 });

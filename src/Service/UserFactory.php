@@ -36,7 +36,7 @@ class UserFactory
             $user->getPassword()
         );
         $user->setPassword($hashedPassword);
-        $user->setRoles(['ROLE_USER']);
+        $user->setRoles(['ROLE_ADMIN']);
 
         return $user;
     }

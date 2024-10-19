@@ -230,6 +230,28 @@ class Trick
         return $oldestPicture;
     }
 
+    public function getCoverPicture(): ?TrickPicture
+    {
+        foreach ($this->trickPictures as $picture) {
+            if ($picture->isMainPicture()) {
+                return $picture;
+            }
+        }
+
+        return $this->getOldestPicture();
+    }
+
+    public function getCoverPictureOnly(): ?TrickPicture
+    {
+        foreach ($this->trickPictures as $picture) {
+            if ($picture->isMainPicture()) {
+                return $picture;
+            }
+        }
+
+        return null;
+    }
+
     public function getSlug(): ?string
     {
         return $this->slug;

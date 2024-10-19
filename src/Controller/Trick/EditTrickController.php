@@ -3,14 +3,11 @@
 namespace App\Controller\Trick;
 
 use App\Entity\Trick;
-use App\Exception\FormException;
-use App\Form\TrickFormType;
+use App\FormModel\FormType\TrickFormType;
 use App\Repository\TrickPictureRepository;
+use App\Repository\TrickRepository;
 use App\Repository\TrickVideoRepository;
-use App\Service\DeletePictureFactory;
-use App\Service\DeleteVideoFactory;
-use App\Service\TrickFormProcessor;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Service\Form\TrickFormProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +20,9 @@ class EditTrickController extends AbstractController
     public function __construct(
         private readonly TrickPictureRepository $trickPictureRepository,
         private readonly TrickVideoRepository $trickVideoRepository,
-        private readonly DeletePictureFactory $deletePictureFactory,
-        private readonly DeleteVideoFactory $deleteVideoFactory,
         private readonly EntityManagerInterface $entityManager,
-        private readonly TrickFormProcessor $trickFormProcessor
+        private readonly TrickFormProcessor $trickFormProcessor,
+        private readonly TrickRepository $trickRepository,
     ) {
 
     }
@@ -40,58 +36,27 @@ class EditTrickController extends AbstractController
     {
         $form = $this->createForm(TrickFormType::class, $trick, [
             'picture_required' => false,
+            'from' => 'EDIT'
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $videosToDelete = explode(',', $request->request->get('videos_id'));
-            $picturesToDelete = explode(',', $request->request->get('pictures_id'));
-
-            $pictureCollection = new ArrayCollection();
-            foreach ($picturesToDelete as $pictureId) {
-                $picture = $this->trickPictureRepository->find($pictureId);
-
-                if ($picture !== null) {
-                    $pictureCollection->add($picture);
-                    $trick->removeTrickPicture($picture);
-                }
-            }
-
-            $videoCollection = new ArrayCollection();
-            foreach ($videosToDelete as $videoId) {
-                $video = $this->trickVideoRepository->find($videoId);
-
-                if ($video !== null) {
-                    $trick->removeTrickVideo($video);
-
-                    if (count($video->getTricks()) > 1) {
-                        continue;
-                    }
-
-                    $videoCollection->add($video);
-                }
-            }
-
             $this->entityManager->beginTransaction();
             try {
-                if ($trick->getTrickPictures()->count() === 0) {
-                    throw new FormException('Il faut obligatoirement une image pour le Trick.');
-                }
                 $trick = ($this->trickFormProcessor)($form);
 
                 $this->entityManager->persist($trick);
                 $this->entityManager->flush();
                 $this->entityManager->commit();
-
-                $this->deletePictureFactory->deletePicture($pictureCollection);
-                $this->deleteVideoFactory->deleteVideo($videoCollection);
             } catch (\Throwable $th) {
                 $this->entityManager->rollback();
+                $this->entityManager->clear();
 
                 $this->addFlash(
                     'error_form',
                     $th->getMessage()
                 );
+
+                $trick = $this->trickRepository->find($trick->getId());
 
                 return $this->render('editTrick.html.twig', [
                     'form' => $form,
