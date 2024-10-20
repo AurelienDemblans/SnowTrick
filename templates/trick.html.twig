@@ -40,22 +40,26 @@
 	</div>
 
 	<div class="pictures_videos_list hidden" id="pictures_videos_list">
-		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list">
+		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_list">
 			{% for picture in trick.trickPictures %}
-				<div class="card h-100">
-					<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+				<div class="col">
+					<div class="card h-100">
+						<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+					</div>
 				</div>
 			{% endfor %}
 			{% for video in trick.trickVideos %}
-				<div class="card h-100">
-					{% if video.isExternalUrl() %}
-						<iframe src={{video.url}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-					{% else %}
-						<video controls>
-							<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
-							Votre navigateur ne supporte pas la vidéo HTML5.
-						</video>
-					{% endif %}
+				<div class="col">
+					<div class="card h-100">
+						{% if video.isExternalUrl() %}
+							<iframe src={{video.url}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+						{% else %}
+							<video controls>
+								<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
+								Votre navigateur ne supporte pas la vidéo HTML5.
+							</video>
+						{% endif %}
+					</div>
 				</div>
 			{% endfor %}
 		</div>

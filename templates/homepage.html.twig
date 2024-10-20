@@ -78,7 +78,7 @@ arrowUp.classList.add('show_trick');
 		<a href="#" class="smooth_scroll_up" data-target="#trick_list">{{ ux_icon('formkit:arrowdown') }}</a>
 	</div>
 	{% set nbTricksPerPage = 4 %}
-	<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list" data-nbtricksperpage={{nbTricksPerPage}}>
+	<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_list" data-nbtricksperpage={{nbTricksPerPage}}>
 		{% for key, trick in trickList %}
 			{% if key >= nbTricksPerPage %}
 				{% set trickClass = 'hide' %}
@@ -86,17 +86,19 @@ arrowUp.classList.add('show_trick');
 				{% set trickClass = 'show_trick' %}
 			{% endif %}
 			<div class="col {{trickClass}}" data-tricktarget={{(key/nbTricksPerPage) % nbTricksPerPage}}>
-				<div class="card h-100">
-					{% if is_granted('ROLE_ADMIN') %}
-						{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickId: trick.id} only %}
-					{% endif %}
-					{% set oldestPicture = trick.getCoverPicture().url ?? 'snowtrick4.jpg' %}
-					<img src="{{ asset('asset/pictures/' ~ oldestPicture) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
-					<div class="card-body">
-						<h5 class="card-title">
-							<a href="{{ path('trick', {'id': trick.id, 'slug': trick.slug}) }}">
-								{{ trick.name }}</a>
-						</h5>
+				<div class="col">
+					<div class="card h-100">
+						{% if is_granted('ROLE_ADMIN') %}
+							{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickId: trick.id} only %}
+						{% endif %}
+						{% set oldestPicture = trick.getCoverPicture().url ?? 'snowtrick4.jpg' %}
+						<img src="{{ asset('asset/pictures/' ~ oldestPicture) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="{{ path('trick', {'id': trick.id, 'slug': trick.slug}) }}">
+									{{ trick.name }}</a>
+							</h5>
+						</div>
 					</div>
 				</div>
 			</div>
