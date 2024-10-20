@@ -4,3 +4,13 @@
     align-items: center;
     height: 45px;
 }
+
+.navbar {
+    height: 45px;
+    padding-top: 3px !important;
+    z-index: 2;
+
+    .container-fluid {
+        background-color: white;
+    }
+}
