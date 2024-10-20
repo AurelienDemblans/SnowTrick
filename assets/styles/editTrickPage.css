@@ -1,3 +1,66 @@
 .hidden {
   display: none !important;
+}
+
+#cover_picture,
+#cover_input {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.form-border {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+#trick_cover img {
+  max-height: 425px;
+  width: auto;
+  max-width: 100%;
+}
+
+.pictures_videos_list .col {
+  max-height: 300px;
+  height: 300px;
+}
+.pictures_videos_list .col .removed-picture,
+.pictures_videos_list .col .removed-video {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.451);
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pictures_videos_list .col .removed-picture .revert-removal-picture,
+.pictures_videos_list .col .removed-picture .revert-removal-video,
+.pictures_videos_list .col .removed-video .revert-removal-picture,
+.pictures_videos_list .col .removed-video .revert-removal-video {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.pictures_videos_list .col .removed-picture svg,
+.pictures_videos_list .col .removed-video svg {
+  height: 50%;
+  width: 50%;
+  color: rgb(226, 100, 91);
+}
+.pictures_videos_list .col .card img,
+.pictures_videos_list .col .card video,
+.pictures_videos_list .col .card iframe {
+  height: calc(100% - 54px);
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.pictures_videos_list .col .card .card-footer {
+  height: 54px;
+  display: flex;
+}
+.pictures_videos_list .col .card .card-footer button {
+  margin: auto;
 }/*# sourceMappingURL=editTrickPage.css.map */

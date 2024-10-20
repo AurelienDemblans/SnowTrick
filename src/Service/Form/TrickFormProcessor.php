@@ -52,10 +52,6 @@ class TrickFormProcessor
 
         try {
             $this->pictureFactory->removePicturesFromDirectory($formModel->getPicturesToDelete());
-        } catch (\Throwable $th) {
-            throw new FormException($th->getMessage());
-        }
-        try {
             $this->videoFactory->removeVideosFromDirectory($formModel->getVideosToDelete());
         } catch (\Throwable $th) {
             throw new FormException($th->getMessage());
