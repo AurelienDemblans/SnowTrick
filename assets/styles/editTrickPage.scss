@@ -1,0 +1,75 @@
+.hidden {
+    display: none !important;
+}
+
+#cover_picture,
+#cover_input {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.form-border {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#trick_cover {
+    img {
+        max-height: 425px;
+        width: auto;
+        max-width: 100%;
+    }
+}
+
+.pictures_videos_list {
+    .col {
+        max-height: 300px;
+        height: 300px;
+
+        .removed-picture,
+        .removed-video {
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.451);
+            z-index: 1;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .revert-removal-picture,
+            .revert-removal-video {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            svg {
+                height: 50%;
+                width: 50%;
+                color: rgb(226, 100, 91);
+            }
+        }
+
+        .card {
+
+            img,
+            video,
+            iframe {
+                height: calc(100% - 54px);
+                object-fit: contain;
+            }
+
+            .card-footer {
+                height: 54px;
+                display: flex;
+
+                button {
+                    margin: auto;
+                }
+            }
+        }
+    }
+}

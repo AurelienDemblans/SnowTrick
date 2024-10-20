@@ -32,6 +32,9 @@ class TrickPicture
     #[ORM\Column(nullable: true)]
     private ?bool $isHomepage = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isMainPicture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ class TrickPicture
     public function setHomepage(?bool $isHomepage): static
     {
         $this->isHomepage = $isHomepage;
+
+        return $this;
+    }
+
+    public function isMainPicture(): ?bool
+    {
+        return $this->isMainPicture;
+    }
+
+    public function setMainPicture(?bool $isMainPicture): static
+    {
+        $this->isMainPicture = $isMainPicture;
 
         return $this;
     }

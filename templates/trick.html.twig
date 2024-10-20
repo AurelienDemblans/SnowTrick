@@ -23,11 +23,11 @@
 
 	<div class="cover_img">
 		<div class="trick_name">{{trick.name}}</div>
-		{% if trick.getOldestPicture() %}
+		{% if trick.getCoverPicture() %}
 			{% if is_granted('ROLE_ADMIN') %}
 				{% include "editOrDeleteButton.html.twig" with {key:1,'trickName': trick.name, 'trickId': trick.id} %}
 			{% endif %}
-			<img src="{{ asset('asset/pictures/' ~ trick.getOldestPicture().getUrl()) }}" alt="Oldest picture of the trick">
+			<img src="{{ asset('asset/pictures/' ~ trick.getCoverPicture().getUrl()) }}" alt="Oldest picture of the trick">
 		{% else %}
 			<img src="{{ asset('asset/pictures/' ~ trick.trickPictures|first.getUrl()) }}" alt="Oldest picture of the trick">
 		{% endif %}
@@ -40,22 +40,26 @@
 	</div>
 
 	<div class="pictures_videos_list hidden" id="pictures_videos_list">
-		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-4 m-0" id="trick_list">
+		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_list">
 			{% for picture in trick.trickPictures %}
-				<div class="card h-100">
-					<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+				<div class="col">
+					<div class="card h-100">
+						<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+					</div>
 				</div>
 			{% endfor %}
 			{% for video in trick.trickVideos %}
-				<div class="card h-100">
-					{% if video.isExternalUrl() %}
-						<iframe src={{video.url}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-					{% else %}
-						<video controls>
-							<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
-							Votre navigateur ne supporte pas la vidéo HTML5.
-						</video>
-					{% endif %}
+				<div class="col">
+					<div class="card h-100">
+						{% if video.isExternalUrl() %}
+							<iframe src={{video.url}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+						{% else %}
+							<video controls>
+								<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
+								Votre navigateur ne supporte pas la vidéo HTML5.
+							</video>
+						{% endif %}
+					</div>
 				</div>
 			{% endfor %}
 		</div>
@@ -113,7 +117,7 @@
 
 
 	<h6 class="text-center m-4">Commentaires de la communauté</h6>
-	<ul class="list-group" id="more_comments_container">
+	<ul class="list-group mb-3" id="more_comments_container">
 		{% for comment in comments %}
 			<li class="list-group-item d-flex trick_comment_item">
 				{% if comment.getUser().getLogo() is not null %}
@@ -129,9 +133,10 @@
 					{{ comment.user.getName() }}</span>
 			</li>
 		</div>
-
 	</li>
 {% else %}
 	<li class="list-group-item">Aucun commentaire pour ce trick.</li>
-{% endfor %}</ul><div class="text-center m-4" id="load-more-comments-container">
-<button type="button" class="btn btn-primary" id="load-more-comments">Afficher plus de commentaires</button></div>{% endblock %}
+{% endfor %}</ul>{% if (trick.comments|length <= 5) is same as(false) %}
+{% set test = comments|length %}<div class="text-center m-4" id="load-more-comments-container">
+	<button type="button" class="btn btn-primary" id="load-more-comments">Afficher plus de commentaires</button>
+</div>{% endif %}{% endblock %}

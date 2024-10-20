@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	SnowTrick : édition
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/editTrickPage.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('asset/JS/editTrick.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 p-0">
+		<h1 class="text-center">Édition de trick</h1>
+
+		{{ form_start(form) }}
+
+		{% if trick.getCoverPictureOnly %}
+			<div class="form-group m-3 form-label hidden text-center" id="cover_input">
+				{{ form_label(form.trickCoverPicture, 'Ajouter une image de couverture via un fichier', {'label_attr': {'class': 'form-label h6 mb-3'}}) }}
+				{{ form_widget(form.trickCoverPicture, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.trickCoverPicture) }}
+			</div>
+		{% else %}
+			<div class="form-group m-3 form-label text-center" id="cover_input">
+				{{ form_label(form.trickCoverPicture, 'Ajouter une image de couverture via un fichier', {'label_attr': {'class': 'form-label h6 mb-3'}}) }}
+				{{ form_widget(form.trickCoverPicture, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.trickCoverPicture) }}
+			</div>
+		{% endif %}
+
+		<div class="form-group m-3 text-center" id="cover_picture">
+			<div class="form-label h6 mb-3">
+				Image de couverture du trick
+			</div>
+
+			<div class="pictures_videos_list">
+				<div id="trick_cover">
+					{% for picture in trick.trickPictures %}
+						{% if picture.isMainPicture() %}
+							<div id="picture-{{picture.id}}">
+								<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+								<div class="mt-1 text-center">
+									<button type="button" class="btn btn-primary toggle_cover_input" data-id="{{picture.id}}">
+										Modifier
+									</button>
+									<button type="button" class="btn btn-danger delete_picture toggle_cover_input" data-id="{{picture.id}}">
+										Supprimer
+									</button>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-3 text-center">
+			{{ form_label(form.name, 'Nom du trick', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.name) }}
+		</div>
+
+		<div class="form-group m-3 text-center">
+			{{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.description) }}
+		</div>
+
+		<div class="form-group m-3 text-center">
+			{{ form_label(form.trickGroup, 'Changer le groupe', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.trickGroup, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.trickGroup) }}
+		</div>
+
+		<div class="form-group m-3 text-center form-border">
+			{{ form_label(form.trickPictures, 'Ajouter des images via un fichier', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.trickPictures, {'attr': {'class': 'form-control-file'}}) }}
+			{{ form_errors(form.trickPictures) }}
+
+			<div class="form-label h6 mt-3 mb-3">
+				Image(s) actuelle(s) du trick
+			</div>
+
+			<div class="pictures_videos_list" id="pictures_list">
+				<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_picture_list">
+					{% for picture in trick.trickPictures %}
+						{% if picture.isMainPicture() is null or picture.isMainPicture() is same as(false) %}
+							<div class="col">
+								<div class="card h-100 picture-card mt-0 mb-2" id="picture-{{picture.id}}">
+									<div class="removed-picture hidden" id="removed-picture-{{picture.id}}">{{ ux_icon('mdi:denied') }}
+										<button type="button" class="revert-removal-picture" data-id="{{picture.id}}">
+											Restaurer l'image
+										</button>
+									</div>
+									<img src="{{ asset('asset/pictures/' ~ picture.url) }}"/>
+									<div class="card-footer text-center">
+										<button type="button" class="btn btn-danger hover-text delete_picture" data-id="{{picture.id}}">
+											Supprimer
+										</button>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-3 text-center form-border">
+			{{ form_label(form.trickVideos, 'Ajouter des vidéos via un fichier', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.trickVideos, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.trickVideos) }}
+
+			<div class="form-label h6 mt-3 mb-3">
+				Vidéo(s) actuelle(s) du trick
+			</div>
+
+			<div class="pictures_videos_list" id="videos_list">
+				<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_video_list">
+					{% for video in trick.trickVideos %}
+						<div class="col">
+							<div class="card h-100 video-card mt-0" id="video-{{video.id}}">
+								<div class="removed-video hidden" id="removed-video-{{video.id}}">{{ ux_icon('mdi:denied') }}
+									<button type="button" class="revert-removal-video" data-id="{{video.id}}">
+										Restaurer la vidéo
+									</button>
+								</div>
+								{% if video.isExternalUrl() %}
+									<iframe src={{video.url}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+								{% else %}
+									<video controls>
+										<source src="{{ asset('asset/videos/' ~ video.url) }}" type="video/mp4">
+										Votre navigateur ne supporte pas la vidéo HTML5.
+									</video>
+								{% endif %}
+								<div class="card-footer text-center">
+									<button type="button" class="btn btn-danger hover-text delete_video" data-id="{{video.id}}">
+										Supprimer
+									</button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-3 text-center">
+			{{ form_label(form.trickVideosUrl, 'Ajouter des vidéos via des liens youtube', {'label_attr': {'class': 'form-label h6 mt-3 mb-3'}}) }}
+			{{ form_widget(form.trickVideosUrl, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.trickVideosUrl) }}
+		</div>
+
+		<div class="container text-center m-3">
+			<button type="submit" class="btn btn-primary mt-3">Valider</button>
+			<button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#deleteFromEditModal">
+				Supprimer le trick
+			</button>
+		</div>
+
+		{{ form_end(form) }}
+	</div>
+
+	<div class="modal fade" id="deleteFromEditModal" tabindex="-1" aria-labelledby="deleteFromEditModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="deleteFromEditModal">Supprimer la figure
+						{{trick.name}}
+					</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Êtes-vous certains de vouloir supprimer cette figure ?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+					<form action="{{ path('trick_delete', { 'id': trick.id }) }}" method="POST">
+						<button type="submit" class="btn btn-danger">Supprimer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

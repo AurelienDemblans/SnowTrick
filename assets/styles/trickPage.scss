@@ -32,14 +32,17 @@
 
 .pictures_videos_list {
     .trick_list {
-        .card {
+        .col {
+            height: 300px;
 
-            img,
-            video,
-            iframe {
-                width: 100%;
-                height: 15vw;
-                object-fit: cover;
+            .card {
+
+                img,
+                video,
+                iframe {
+                    height: 100%;
+                    object-fit: contain;
+                }
             }
         }
     }

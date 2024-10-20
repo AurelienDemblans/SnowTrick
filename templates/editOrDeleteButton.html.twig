@@ -1,8 +1,8 @@
 <div id="edit-delete-container">
-	<button type="button" class="btn hover-text">
+	<a type="button" class="btn hover-text" href="{{ path('app_edit_trick', { 'id': trickId }) }}">
 		{{ ux_icon('material-symbols:edit-outline') }}
 		<span class="tooltip-text" id="top">Editer</span>
-	</button>
+	</a>
 	<button type="button" class="btn hover-text" data-bs-toggle="modal" data-bs-target="#exampleModal+{{key}}">
 		{{ ux_icon('icomoon-free:bin') }}
 		<span class="tooltip-text" id="top">Supprimer</span>

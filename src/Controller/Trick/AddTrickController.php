@@ -3,8 +3,8 @@
 namespace App\Controller\Trick;
 
 use App\Entity\Trick;
-use App\Form\TrickFormType;
-use App\Service\TrickFormProcessor;
+use App\FormModel\FormType\TrickFormType;
+use App\Service\Form\TrickFormProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +40,6 @@ class AddTrickController extends AbstractController
                 $trick = ($this->trickFormProcessor)($form);
 
                 $this->entityManager->persist($trick);
-
                 $this->entityManager->flush();
                 $this->entityManager->commit();
             } catch (\Throwable $th) {
