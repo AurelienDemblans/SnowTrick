@@ -25,31 +25,32 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         $i = 0;
-        foreach (TrickFixture::TRICK_ARRAY as ['ref' => $trick]) {
+        foreach (TrickFixture::TRICK_ARRAY as $key => ['ref' => $trick]) {
             $trickPicture = new TrickPicture();
             $date = $faker->dateTime();
 
-            if($i === 0) {
+            if ($i === 0) {
                 $trickPicture->setHomepage(true);
             }
-            $trickPicture->setUrl($pictures[array_rand($pictures)])
+
+            $trickPicture->setUrl($pictures[0])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->setTrick($this->getReference($trick))
             ;
-
-            $manager->persist($trickPicture);
+            array_shift($pictures);
             $i++;
         }
-        foreach (TrickFixture::TRICK_ARRAY as ['ref' => $trick]) {
+
+        foreach (TrickFixture::TRICK_ARRAY as $key => ['ref' => $trick]) {
             $trickPicture = new TrickPicture();
             $date = $faker->dateTime();
 
-
-            $trickPicture->setUrl($pictures[array_rand($pictures)])
+            $trickPicture->setUrl($pictures[0])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->setTrick($this->getReference($trick))
             ;
 
+            array_shift($pictures);
             $manager->persist($trickPicture);
         }
 

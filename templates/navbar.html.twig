@@ -1,14 +1,34 @@
-<div class="nav_bar">
-	<a href="{{ path('homepage') }}">Accueil</a>
-	<a href="">Tricks</a>
-	<a href="{{ path('chatroom', {'page': 1}) }}">Espace de discussion</a>
-	{% if is_granted('IS_AUTHENTICATED') %}
-		<a href="{{ path('app_logout') }}">Déconnexion</a>
-	{% else %}
-		<a href="{{ path('app_login')}}">Connexion</a>
-	{% endif %}
-	{% if is_granted('IS_AUTHENTICATED') and is_granted('ROLE_ADMIN')%}
-		<a href="{{ path('trick_add')}}">Créer un trick</a>
-	{% endif %}
-	<a href="{{ path('sign-up')}}">S'enregistrer</a>
-</div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{{ path('homepage') }}">Accueil</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('chatroom', {'page': 1}) }}">Espace de discussion</a>
+				</li>
+				{% if is_granted('IS_AUTHENTICATED') and is_granted('ROLE_ADMIN')%}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('trick_add')}}">Créer un trick</a>
+					</li>
+				{% endif %}
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					{% if is_granted('IS_AUTHENTICATED') %}
+						<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+					{% else %}
+						<a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
+					{% endif %}
+				</li>
+				{% if not is_granted('IS_AUTHENTICATED')%}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('sign-up')}}">S'enregistrer</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
