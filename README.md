@@ -17,7 +17,7 @@ jouer la commande : composer install (avant vérifier que composer est bien inst
 
 - jouer les migrations : php bin/console doctrine:migrations:migrate
 
-- jouer les fixtures : php bin/console do:fi:lo
+- jouer les fixtures : php bin/console do:fi:lo  (si les fixtures ne fonctionnent pas à cause d'un problème de lenght de faker, relancer les fixtures plusieurs fois ... )
 
 le projet devrait être correctement installé. 
 
