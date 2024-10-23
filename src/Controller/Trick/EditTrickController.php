@@ -66,7 +66,7 @@ class EditTrickController extends AbstractController
 
             $this->addFlash(
                 'success_trick_edited',
-                'Le trick à correctement été mis à jour.'
+                'Le trick a correctement été mis à jour.'
             );
 
             return $this->redirectToRoute('trick', array('id' => $trick->getId(), 'slug' => $trick->getSlug()));
