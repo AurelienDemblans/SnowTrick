@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const loadMoreButton = document.getElementById('load-more-comments');
     const showPictureButton = document.getElementById('show_pictures_videos_list_button');
 
-    loadMoreButton.addEventListener("click", function () {
+    loadMoreButton?.addEventListener("click", function () {
         fetch(`/trick_comments/${trickId
             }/comments_offset/${offset
             }`).then(response => response.text()).then(data => {

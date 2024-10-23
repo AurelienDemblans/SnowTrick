@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const pictureToDelete = document.getElementById('removed-picture-' + id);
-            pictureToDelete.classList.remove('hidden');
+            if (pictureToDelete) {
+                pictureToDelete.classList.remove('hidden');
+            }
 
             document.getElementById('trick_form_pictures_id').value = picturesId.join(',');
         });
@@ -60,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const videoId = this.getAttribute('data-id');
 
             videosId = videosId.filter((id) => id !== videoId);
-            console.log(videosId);
+
             document.getElementById('removed-video-' + videoId).classList.add('hidden');
             document.getElementById('trick_form_videos_id').value = videosId.join(',');
         });

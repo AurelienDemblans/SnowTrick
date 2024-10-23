@@ -33,19 +33,20 @@ class TrickPictureFixture extends Fixture implements DependentFixtureInterface
                 $trickPicture->setHomepage(true);
             }
 
-            $trickPicture->setUrl($pictures[0])
+            $trickPicture->setUrl($pictures[0] !== 'snowtrick4.jpg' ? $pictures[0] : $pictures[1])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->setTrick($this->getReference($trick))
             ;
             array_shift($pictures);
             $i++;
+            $manager->persist($trickPicture);
         }
 
         foreach (TrickFixture::TRICK_ARRAY as $key => ['ref' => $trick]) {
             $trickPicture = new TrickPicture();
             $date = $faker->dateTime();
 
-            $trickPicture->setUrl($pictures[0])
+            $trickPicture->setUrl($pictures[0] !== 'snowtrick4.jpg' ? $pictures[0] : $pictures[1])
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($date))
                 ->setTrick($this->getReference($trick))
             ;
