@@ -15,6 +15,10 @@ dans .env.local remplacer les variables APP_SECRET et DATABASE_URL par les valeu
 se placer sur le dossier "snowtrick"
 jouer la commande : composer install (avant vérifier que composer est bien installer sur l'ordinateur)
 
+- jouer les migrations : php bin/console doctrine:migrations:migrate
+
+- jouer les fixtures : php bin/console do:fi:lo
+
 le projet devrait être correctement installé. 
 
 Vous pouvez le lancer avec symfony server:start.
