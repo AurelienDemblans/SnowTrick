@@ -2,7 +2,7 @@
 
 declare (strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Factory;
 
 use App\Entity\ChatRoomComment;
 use App\Entity\TrickComment;

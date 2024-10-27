@@ -4,7 +4,7 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\FormModel\FormType\AddUserFormType;
-use App\Service\UserFactory;
+use App\Service\Factory\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

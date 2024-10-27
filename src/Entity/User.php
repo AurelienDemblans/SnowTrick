@@ -43,6 +43,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private $resetToken;
+
     /**
      * @var Collection<int, TrickComment>
      */
@@ -222,5 +225,17 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
     }
 }
