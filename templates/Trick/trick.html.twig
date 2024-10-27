@@ -25,7 +25,7 @@
 		<div class="trick_name">{{trick.name}}</div>
 		{% if trick.getCoverPicture() %}
 			{% if is_granted('ROLE_ADMIN') %}
-				{% include "editOrDeleteButton.html.twig" with {key:1,'trickName': trick.name, 'trickSlug': trick.slug} %}
+				{% include "Utils/editOrDeleteButton.html.twig" with {key:1,'trickName': trick.name, 'trickSlug': trick.slug} %}
 			{% endif %}
 			<img src="{{ asset('asset/pictures/' ~ trick.getCoverPicture().getUrl()) }}" alt="Oldest picture of the trick">
 		{% else %}

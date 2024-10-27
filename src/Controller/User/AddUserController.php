@@ -49,7 +49,7 @@ class AddUserController extends AbstractController
             return $this->redirectToRoute('homepage', array('user' => $user));
         }
 
-        return $this->render('signup.html.twig', [
+        return $this->render('Authentication/signup.html.twig', [
             'form' => $form,
         ]);
     }

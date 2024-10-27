@@ -34,12 +34,11 @@ class TrickController extends AbstractController
         private readonly ParameterBagInterface $paramsBagInterface,
         private readonly Filesystem $filesystem
     ) {
-
     }
 
     #[Route(
-        '/trick/{slug}',
-        name: 'trick',
+        '/trick-{slug}',
+        name: 'trick_show',
         methods:Request::METHOD_GET,
     )]
     public function showTrick(string $slug): Response
@@ -52,7 +51,7 @@ class TrickController extends AbstractController
             throw new SnowTrickException('Impossible d\'afficher ce trick', code:404, previous:$th);
         }
 
-        return $this->render('trick.html.twig', ['trick' => $trick, 'comments' => $comments]);
+        return $this->render('Trick/trick.html.twig', ['trick' => $trick, 'comments' => $comments]);
     }
 
     #[Route(
@@ -67,7 +66,7 @@ class TrickController extends AbstractController
         $moreComments = $this->commentRepository->findCommentsByTrickPaginated($trick, $offset + self::COMMENT_LIMIT, 1);
         $hasMoreComments = count($moreComments) > 0 ? true : false;
 
-        return $this->render('listComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
+        return $this->render('Utils/listComment.html.twig', ['comments' => $comments, 'hasMoreComments' => $hasMoreComments]);
     }
 
     #[Route(
@@ -99,7 +98,7 @@ class TrickController extends AbstractController
                     $th->getMessage()
                 );
 
-                return $this->render('addTrick.html.twig', [
+                return $this->render('Trick/addTrick.html.twig', [
                     'form' => $form,
                 ]);
             }
@@ -112,7 +111,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('homepage', array('trick' => $trick));
         }
 
-        return $this->render('addTrick.html.twig', [
+        return $this->render('Trick/addTrick.html.twig', [
             'form' => $form,
         ]);
     }
@@ -151,7 +150,7 @@ class TrickController extends AbstractController
 
                 $trick = $this->trickRepository->find($trick->getId());
 
-                return $this->render('editTrick.html.twig', [
+                return $this->render('Trick/editTrick.html.twig', [
                     'form' => $form,
                     'trick' => $trick
                 ]);
@@ -166,7 +165,7 @@ class TrickController extends AbstractController
 
         }
 
-        return $this->render('editTrick.html.twig', [
+        return $this->render('Trick/editTrick.html.twig', [
             'form' => $form,
             'trick' => $trick
         ]);
