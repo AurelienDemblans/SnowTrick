@@ -27,7 +27,7 @@ class EditTrickController extends AbstractController
 
     }
     #[Route(
-        '/edit/trick/{slug}',
+        '/trick/{slug}/edit',
         name: 'app_edit_trick',
         methods:[Request::METHOD_POST, Request::METHOD_GET]
     )]

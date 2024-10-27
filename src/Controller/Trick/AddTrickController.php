@@ -22,7 +22,7 @@ class AddTrickController extends AbstractController
     }
 
     #[Route(
-        '/add/trick',
+        '/trick/add',
         name: 'trick_add',
         methods:[Request::METHOD_POST, Request::METHOD_GET]
     )]

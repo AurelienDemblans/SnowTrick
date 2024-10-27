@@ -25,7 +25,7 @@ class TrickDeleteController extends AbstractController
     }
 
     #[Route(
-        '/delete/trick/{slug}',
+        '/trick/{slug}/delete',
         name: 'trick_delete',
         methods:Request::METHOD_POST
     )]
