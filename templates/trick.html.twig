@@ -117,7 +117,7 @@
 
 
 	<h6 class="text-center m-4">Commentaires de la communauté</h6>
-	<ul class="list-group mb-3" id="more_comments_container">
+	<ul class="list-group container mb-3" id="more_comments_container">
 		{% for comment in comments %}
 			<li class="list-group-item d-flex trick_comment_item">
 				{% if comment.getUser().getLogo() is not null %}

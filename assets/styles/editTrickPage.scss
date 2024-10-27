@@ -59,7 +59,7 @@
             video,
             iframe {
                 height: calc(100% - 54px);
-                object-fit: contain;
+                object-fit: fill;
             }
 
             .card-footer {

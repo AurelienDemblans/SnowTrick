@@ -10,7 +10,7 @@
         .card {
             img {
                 height: calc(100% - 54px);
-                object-fit: contain;
+                object-fit: fill;
             }
 
             .card-body {
@@ -45,9 +45,8 @@
 
     img {
         height: calc(100vh - 45px);
-        width: auto;
-        max-width: 100vw;
-        object-fit: contain;
+        width: 100vw;
+        object-fit: cover;
     }
 }
 

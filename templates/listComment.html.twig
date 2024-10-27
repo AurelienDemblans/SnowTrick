@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('styles/listComment.css') }}" type="text/css" media="all"/>
 
 <div style="display:none" data-hasmorecomments="{{hasMoreComments ?? false}}" id="hasMoreComments"></div>
-<ul class="list-group">
+<ul class="list-group container">
 	{% for comment in comments %}
 		<li class="list-group-item d-flex trick_comment_item">
 			{% if comment.getUser().getLogo() is not null %}

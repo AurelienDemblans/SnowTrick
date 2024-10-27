@@ -54,8 +54,8 @@
 .pictures_videos_list .col .card video,
 .pictures_videos_list .col .card iframe {
   height: calc(100% - 54px);
-  -o-object-fit: contain;
-     object-fit: contain;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 .pictures_videos_list .col .card .card-footer {
   height: 54px;
