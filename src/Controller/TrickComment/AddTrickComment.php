@@ -4,7 +4,7 @@ declare (strict_types=1);
 
 namespace App\Controller\TrickComment;
 
-use App\Service\TrickCommentFactory;
+use App\Service\Factory\TrickCommentFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

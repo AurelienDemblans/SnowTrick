@@ -25,7 +25,7 @@
 		<div class="trick_name">{{trick.name}}</div>
 		{% if trick.getCoverPicture() %}
 			{% if is_granted('ROLE_ADMIN') %}
-				{% include "editOrDeleteButton.html.twig" with {key:1,'trickName': trick.name, 'trickId': trick.id} %}
+				{% include "Utils/editOrDeleteButton.html.twig" with {key:1,'trickName': trick.name, 'trickSlug': trick.slug} %}
 			{% endif %}
 			<img src="{{ asset('asset/pictures/' ~ trick.getCoverPicture().getUrl()) }}" alt="Oldest picture of the trick">
 		{% else %}
@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="pictures_videos_list hidden" id="pictures_videos_list">
-		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_list">
+		<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0 d-flex justify-content-center" id="trick_list">
 			{% for picture in trick.trickPictures %}
 				<div class="col">
 					<div class="card h-100">
@@ -117,7 +117,7 @@
 
 
 	<h6 class="text-center m-4">Commentaires de la communauté</h6>
-	<ul class="list-group mb-3" id="more_comments_container">
+	<ul class="list-group container mb-3" id="more_comments_container">
 		{% for comment in comments %}
 			<li class="list-group-item d-flex trick_comment_item">
 				{% if comment.getUser().getLogo() is not null %}

@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,21 +22,30 @@ class AddUserFormType extends AbstractType
                 'label' => 'Nom',
                 'required' => $options['required_field'],
                 'constraints' => [
-                new Assert\Length([
-                    'min' => 2,
-                    'max' => 10,
-                    'minMessage' => 'Le nom doit contenir au moins {{ limit }} caractères.',
-                    'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères.',
-                ]),
-            ],
+                    new Assert\Length([
+                        'min' => 2,
+                        'max' => 10,
+                        'minMessage' => 'Le nom doit contenir au moins {{ limit }} caractères.',
+                        'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères.',
+                    ]),
+                ],
             ])
             ->add('email', EmailType::class)
-            ->add('password', PasswordType::class, ['label' => 'Mot de passe','constraints' => [
-                new Assert\Length([
-                    'min' => 6,
-                    'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
-                ]),
-            ]])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent correspondre.',
+                'required' => true,
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                    'constraints' => [
+                        new Assert\Length([
+                            'min' => 6,
+                            'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
+                        ]),
+                    ],
+                ],
+                'second_options' => ['label' => 'Confirmez le mot de passe'],
+            ])
             ->add('save', SubmitType::class)
         ;
     }

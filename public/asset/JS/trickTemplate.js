@@ -28,6 +28,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //show pictures on mobile
     showPictureButton.addEventListener("click", function () {
-        document.getElementById('pictures_videos_list').classList.remove('hidden');
+        const pictureVideoList = document.getElementById('pictures_videos_list');
+        const bouton = showPictureButton.querySelector('button');
+
+        if (pictureVideoList.classList.contains('hidden')) {
+            pictureVideoList.classList.remove('hidden');
+            bouton.textContent = "Cacher les photos et vidéos";
+
+        } else {
+            pictureVideoList.classList.add('hidden');
+            bouton.textContent = "Afficher les photos et vidéos";
+        }
     });
 });

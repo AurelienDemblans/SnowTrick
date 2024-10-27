@@ -2,7 +2,7 @@
 
 namespace App\Controller\Chatroom;
 
-use App\Service\ChatRoomCommentFactory;
+use App\Service\Factory\ChatRoomCommentFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
