@@ -30,7 +30,7 @@
 		<a href="#" class="smooth_scroll_up" data-target="#trick_list">{{ ux_icon('formkit:arrowdown') }}</a>
 	</div>
 	{% set nbTricksPerPage = 4 %}
-	<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0" id="trick_list" data-nbtricksperpage={{nbTricksPerPage}}>
+	<div class="trick_list row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-2 m-0 d-flex justify-content-center" id="trick_list" data-nbtricksperpage={{nbTricksPerPage}}>
 		{% for key, trick in trickList %}
 			{% if key >= nbTricksPerPage %}
 				{% set trickClass = 'hide' %}
