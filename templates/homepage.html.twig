@@ -89,13 +89,13 @@ arrowUp.classList.add('show_trick');
 				<div class="col">
 					<div class="card h-100">
 						{% if is_granted('ROLE_ADMIN') %}
-							{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickId: trick.id} only %}
+							{% include "editOrDeleteButton.html.twig" with {key: key,trickName: trick.name, trickSlug: trick.slug} only %}
 						{% endif %}
 						{% set oldestPicture = trick.getCoverPicture().url ?? 'snowtrick4.jpg' %}
 						<img src="{{ asset('asset/pictures/' ~ oldestPicture) }}" class="card-img-top" alt="Image pour {{ trick.name }}">
 						<div class="card-body">
 							<h5 class="card-title">
-								<a href="{{ path('trick', {'id': trick.id, 'slug': trick.slug}) }}">
+								<a href="{{ path('trick', {'slug': trick.slug}) }}">
 									{{ trick.name }}</a>
 							</h5>
 						</div>

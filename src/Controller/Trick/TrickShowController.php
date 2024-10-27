@@ -26,12 +26,14 @@ class TrickShowController extends AbstractController
     }
 
     #[Route(
-        '/trick/{id<\d+>}/{slug}',
+        '/trick/{slug}',
         name: 'trick',
-        methods:Request::METHOD_GET
+        methods:Request::METHOD_GET,
     )]
-    public function showTrick(?Trick $trick): Response
+    public function showTrick(string $slug): Response
     {
+        $trick = $this->trickRepository->findOneBy(['slug' => $slug]);
+
         try {
             $comments = $this->commentRepository->findCommentsByTrickPaginated($trick, self::COMMENT_OFFSET, self::COMMENT_LIMIT);
         } catch (\Throwable $th) {

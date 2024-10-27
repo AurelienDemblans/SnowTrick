@@ -25,13 +25,15 @@ class TrickDeleteController extends AbstractController
     }
 
     #[Route(
-        '/delete/trick/{id<\d+>}',
+        '/delete/trick/{slug}',
         name: 'trick_delete',
         methods:Request::METHOD_POST
     )]
     #[IsGranted('ROLE_ADMIN')]
-    public function removeTrick(?Trick $trick): Response
+    public function removeTrick(?string $slug): Response
     {
+        $trick = $this->trickRepository->findOneBy(['slug' => $slug]);
+
         if (!$trick) {
             throw new SnowTrickException('Cette figure a déjà été supprimée');
         }

@@ -1,5 +1,5 @@
 <div id="edit-delete-container">
-	<a type="button" class="btn hover-text" href="{{ path('app_edit_trick', { 'id': trickId }) }}">
+	<a type="button" class="btn hover-text" href="{{ path('app_edit_trick', { 'slug': trickSlug }) }}">
 		{{ ux_icon('material-symbols:edit-outline') }}
 		<span class="tooltip-text" id="top">Editer</span>
 	</a>
@@ -23,7 +23,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
-				<form action="{{ path('trick_delete', { 'id': trickId }) }}" method="POST">
+				<form action="{{ path('trick_delete', { 'slug': trickSlug }) }}" method="POST">
 					<button type="submit" class="btn btn-danger">Supprimer</button>
 				</form>
 			</div>

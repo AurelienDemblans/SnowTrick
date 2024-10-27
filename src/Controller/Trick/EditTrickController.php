@@ -27,13 +27,15 @@ class EditTrickController extends AbstractController
 
     }
     #[Route(
-        '/edit/trick/{id<\d+>}',
+        '/edit/trick/{slug}',
         name: 'app_edit_trick',
         methods:[Request::METHOD_POST, Request::METHOD_GET]
     )]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(?Trick $trick, Request $request): Response
+    public function index(?string $slug, Request $request): Response
     {
+        $trick = $this->trickRepository->findOneBy(['slug' => $slug]);
+
         $form = $this->createForm(TrickFormType::class, $trick, [
             'picture_required' => false,
             'from' => 'EDIT'
@@ -69,7 +71,7 @@ class EditTrickController extends AbstractController
                 'Le trick a correctement été mis à jour.'
             );
 
-            return $this->redirectToRoute('trick', array('id' => $trick->getId(), 'slug' => $trick->getSlug()));
+            return $this->redirectToRoute('trick', array('slug' => $trick->getSlug()));
 
         }
 
